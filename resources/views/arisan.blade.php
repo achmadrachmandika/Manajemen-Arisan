@@ -28,10 +28,16 @@
     <div class="hero">
         <div class="container">
             <h1>Manajemen Arisan</h1>
+            <h1>Manajemen Arisan</h1>
+            <h1>Manajemen Arisan</h1>
+            <h1>Manajemen Arisan</h1>
+            <h1>Manajemen Arisan</h1>
+            <h1>Manajemen Arisan</h1>
+            <h1>Manajemen Arisan</h1>
             <p>Deadline Januari namun target desember</p>
         </div>
     </div>
 
 </body>
-    
+
 </html>
