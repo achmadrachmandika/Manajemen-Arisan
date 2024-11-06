@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArisanController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProdukController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +22,4 @@ Route::get('/', function () {
 
 Route::get('/arisan', [ArisanController::class, 'index']);
 Route::get('/dashboard', [DashboardController::class, 'index']);
+Route::get('/produk/index', [ProdukController::class, 'index'])->name('produk.index');

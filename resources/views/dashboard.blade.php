@@ -217,10 +217,12 @@
                     </div>
                 </nav>
             </header>
+
+            
             <!--  Header End -->
             <div class="container-fluid">
                 <!--  Owl carousel -->
-                {{-- <div class="owl-carousel counter-carousel owl-theme">
+                 <div class="owl-carousel counter-carousel owl-theme">
                     <div class="item">
                         <div class="card border-0 zoom-in bg-light-primary shadow-none">
                             <div class="card-body">
@@ -293,7 +295,7 @@
                             </div>
                         </div>
                     </div>
-                </div> --}}
+                </div> 
                 <!--  Row 1 -->
                 <div class="row">
                     <div class="col-lg-8 d-flex align-items-strech">

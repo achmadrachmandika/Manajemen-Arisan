@@ -11,7 +11,7 @@
         <!-- Dashboard -->
         <!-- =================== -->
         <li class="sidebar-item">
-            <a class="sidebar-link" href="{{ asset('assets/html/main/index-2.html') }}" aria-expanded="false">
+            <a class="sidebar-link" href="{{ route('produk.index') }}" aria-expanded="false">
                 <span>
                     <i class="ti ti-aperture"></i>
                 </span>
@@ -51,7 +51,7 @@
             </a>
         </li>
 
-        <div class="unlimited-access hide-menu bg-light-primary position-relative my-7 rounded">
+        {{-- <div class="unlimited-access hide-menu bg-light-primary position-relative my-7 rounded">
             <div class="d-flex">
                 <div class="unlimited-access-title">
                     <h6 class="fw-semibold fs-4 mb-6 text-dark w-85">Unlimited Access</h6>
@@ -61,5 +61,5 @@
                     <img src="assets/dist/images/backgrounds/rocket.png" alt="" class="img-fluid">
                 </div>
             </div>
-        </div>
+        </div> --}}
 </nav>
