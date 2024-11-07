@@ -22,4 +22,4 @@ Route::get('/', function () {
 
 Route::get('/arisan', [ArisanController::class, 'index']);
 Route::get('/dashboard', [DashboardController::class, 'index']);
-Route::get('/produk/index', [ProdukController::class, 'index'])->name('produk.index');
+Route::resource('produk', ProdukController::class);

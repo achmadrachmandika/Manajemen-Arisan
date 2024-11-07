@@ -7,12 +7,12 @@
                                 <i class="ti ti-menu-2"></i>
                             </a>
                         </li>
-                        <li class="nav-item d-none d-lg-block">
+                        {{-- <li class="nav-item d-none d-lg-block">
                             <a class="nav-link nav-icon-hover" href="javascript:void(0)" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal">
                                 <i class="ti ti-search"></i>
                             </a>
-                        </li>
+                        </li> --}}
                     </ul>
 
                     <div class="d-block d-lg-none">
@@ -44,7 +44,7 @@
                                         data-bs-toggle="dropdown" aria-expanded="false">
                                         <div class="d-flex align-items-center">
                                             <div class="user-profile-img">
-                                                <img src="assets/dist/images/profile/user-1.jpg" class="rounded-circle"
+                                                <img src="{{asset('assets/dist/images/profile/user-1.jpg')}}" class="rounded-circle"
                                                     width="35" height="35" alt="" />
                                             </div>
                                         </div>
@@ -56,7 +56,7 @@
                                                 <h5 class="mb-0 fs-5 fw-semibold">User Profile</h5>
                                             </div>
                                             <div class="d-flex align-items-center py-9 mx-7 border-bottom">
-                                                <img src="assets/dist/images/profile/user-1.jpg" class="rounded-circle"
+                                                <img src="{{asset('assets/dist/images/profile/user-1.jpg')}}" class="rounded-circle"
                                                     width="80" height="80" alt="" />
                                                 <div class="ms-3">
                                                     <h5 class="mb-1 fs-3">Mathew Anderson</h5>
@@ -67,7 +67,7 @@
                                                 </div>
                                             </div>
                                             <div class="message-body">
-                                                <a href="{{ asset('assets/html/main/page-user-profile.html') }}"
+                                                <a href="{{asset('assets/html/main/page-user-profile.html')}}"
                                                     class="py-8 px-7 mt-8 d-flex align-items-center">
                                                     <span
                                                         class="d-flex align-items-center justify-content-center bg-light rounded-1 p-6">
@@ -113,8 +113,7 @@
                                                         </div>
                                                         <div class="col-6">
                                                             <div class="m-n4">
-                                                                <img src="assets/dist/images/backgrounds/unlimited-bg.png"
-                                                                    alt="" class="w-100">
+                                                                <img src="{{ asset('assets/dist/images/backgrounds/unlimited-bg.png') }}" alt="" class="w-100"> 
                                                             </div>
                                                         </div>
                                                     </div>

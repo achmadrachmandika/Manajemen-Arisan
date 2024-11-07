@@ -13,9 +13,9 @@
         <li class="sidebar-item">
             <a class="sidebar-link" href="{{ route('produk.index') }}" aria-expanded="false">
                 <span>
-                    <i class="ti ti-aperture"></i>
+                    <i class="ti ti-package"></i>
                 </span>
-                <span class="hide-menu">Pengguna</span>
+                <span class="hide-menu">Produk</span>
             </a>
         </li>
         <li class="sidebar-item">
@@ -37,9 +37,9 @@
         <li class="sidebar-item">
             <a class="sidebar-link" href="index4.html" aria-expanded="false">
                 <span>
-                    <i class="ti ti-cpu"></i>
+                    <i class="ti ti-id-badge"></i>
                 </span>
-                <span class="hide-menu">Produk</span>
+                <span class="hide-menu">Peserta</span>
             </a>
         </li>
         <li class="sidebar-item">
@@ -51,15 +51,20 @@
             </a>
         </li>
 
-        {{-- <div class="unlimited-access hide-menu bg-light-primary position-relative my-7 rounded">
-            <div class="d-flex">
-                <div class="unlimited-access-title">
-                    <h6 class="fw-semibold fs-4 mb-6 text-dark w-85">Unlimited Access</h6>
-                    <button class="btn btn-primary fs-2 fw-semibold lh-sm">Signup</button>
+        <div class="fixed-profile p-3 bg-light-secondary rounded sidebar-ad mt-3">
+            <div class="hstack gap-3">
+                <div class="john-img">
+                    <img src="{{asset('assets/dist/images/profile/user-1.jpg')}}" class="rounded-circle" width="40" height="40"
+                        alt="">
                 </div>
-                <div class="unlimited-access-img">
-                    <img src="assets/dist/images/backgrounds/rocket.png" alt="" class="img-fluid">
+                <div class="john-title">
+                    <h6 class="mb-0 fs-4 fw-semibold">Mathew</h6>
+                    <span class="fs-2 text-dark">Designer</span>
                 </div>
+                <button class="border-0 bg-transparent text-primary ms-auto" tabindex="0" type="button" aria-label="logout"
+                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="logout">
+                    <i class="ti ti-power fs-6"></i>
+                </button>
             </div>
-        </div> --}}
+        </div>
 </nav>
