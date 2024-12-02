@@ -36,14 +36,46 @@
                                 @enderror
                             </div>
 
+                            <div class="form-group">
+                                <label for="harga">Harga</label>
+                                <textarea class="form-control @error('harga') is-invalid @enderror" id="harga" name="harga" rows="3"
+                                    required>{{ old('harga', $produk->harga) }}</textarea>
+                                @error('harga')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <!-- Kategori -->
                             <div class="form-group">
                                 <label for="kategori">Kategori</label>
-                                <input type="text" class="form-control @error('kategori') is-invalid @enderror"
-                                    id="kategori" name="kategori" value="{{ old('kategori', $produk->kategori) }}"
-                                    required>
+                                <select class="form-control @error('kategori') is-invalid @enderror" id="kategori" name="kategori" required>
+                                    <option value="">Pilih Kategori</option>
+                                    <option value="Sembako" {{ old('kategori', $produk->kategori) == 'Sembako' ? 'selected' : '' }}>Sembako</option>
+                                    <option value="Minuman" {{ old('kategori', $produk->kategori) == 'Minuman' ? 'selected' : '' }}>Minuman</option>
+                                    <option value="Kue/Jajan" {{ old('kategori', $produk->kategori) == 'Kue/Jajan' ? 'selected' : '' }}>Kue/Jajan
+                                    </option>
+                                    <option value="Paket Kue" {{ old('kategori', $produk->kategori) == 'Paket Kue' ? 'selected' : '' }}>Paket Kue
+                                    </option>
+                                    <option value="Paket Snack" {{ old('kategori', $produk->kategori) == 'Paket Snack' ? 'selected' : '' }}>Paket
+                                        Snack</option>
+                                    <option value="Tabungan" {{ old('kategori', $produk->kategori) == 'Tabungan' ? 'selected' : '' }}>Tabungan
+                                    </option>
+                                    <option value="Mebel" {{ old('kategori', $produk->kategori) == 'Mebel' ? 'selected' : '' }}>Mebel</option>
+                                </select>
                                 @error('kategori')
                                 <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
+                                <label for="photo" class="form-label"><strong>Photo:</strong></label>
+                                <input type="file" id="photo" name="photo" class="form-control">
+                                @if($produk->photo)
+                                <img src="{{ asset('storage/' . $produk->photo) }}" alt="Current Photo"
+                                    style="max-width: 150px; height: auto; margin-top: 10px;">
+                                @endif
+                                @error('photo')
+                                <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 

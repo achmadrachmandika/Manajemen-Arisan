@@ -20,6 +20,8 @@ class Produk extends Model
         'nama',
         'deskripsi',
         'kategori',
+        'harga',
+        'photo',
         'tanggal',
     ];
 
@@ -29,4 +31,11 @@ class Produk extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+    
+    public function users()
+{
+    return $this->belongsToMany(User::class);
 }
+}
+
+

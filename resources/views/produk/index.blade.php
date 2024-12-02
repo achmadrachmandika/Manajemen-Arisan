@@ -4,7 +4,6 @@
 <main class="content">
     <div class="container">
 
-        <h1 class="h3 my-3">Halaman Data Produk</h1>
 
         <div class="row">
             <div class="col-12">
@@ -25,6 +24,7 @@
                                     <th>Deskripsi</th>
                                     <th>Kategori</th>
                                     <th>Tanggal</th>
+                                    <th>Foto</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -34,8 +34,14 @@
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $item->nama }}</td>
                                     <td>{{ $item->deskripsi }}</td>
+                                    <td>{{ $item->harga }}</td>
                                     <td>{{ $item->kategori }}</td>
                                     <td>{{ $item->tanggal->format('d-m-Y') }}</td>
+                                    <td>
+                                    @if($item->photo)
+                                    <img src="{{ asset('storage/' . $item->photo) }}" alt="{{ $item->nama }}" style="max-width: 100px; height: 100px;">
+                                    @endif
+                                    </td>
                                     <td>
                                         <a href="{{ route('produk.show', $item->id) }}"
                                             class="btn btn-info btn-sm">Detail</a>
@@ -80,4 +86,8 @@
         });
     }
 </script>
+{{-- 
+pembayaran harus rutin, apabila 10x berturut turut tidak bayar, barang naik tambah >Balang yang sudah di pilih tidak
+boleh di tukar dengan barang lain kecuali setok barangnya kosong >pembagian sembako di berikan 2 minggu sebelu, puasa
+S/D 2 minggu setelah puasa >Daging sapi di bagikan malam 21 --}}
 

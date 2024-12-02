@@ -16,10 +16,27 @@ use App\Http\Controllers\ProdukController;
 |
 */
 
+
+// Public route
 Route::get('/', function () {
-    return view('welcome');
+    return view('arisan');
 });
 
-Route::get('/arisan', [ArisanController::class, 'index']);
-Route::get('/dashboard', [DashboardController::class, 'index']);
-Route::resource('produk', ProdukController::class);
+// Routes that require authentication
+Route::middleware('auth')->group(function () {
+
+    // For Super Admin and Admin: Can access Dashboard and Produk
+    Route::middleware(['role:super_admin|admin'])->group(function () {
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::resource('produk', ProdukController::class);
+    });
+
+    // For Peserta: Can access Arisan
+    Route::middleware(['role:peserta'])->group(function () {
+        Route::get('/arisan', [ArisanController::class, 'index'])->name('arisan');
+    });
+});
+// Auth routes (login, registration, etc.)
+Auth::routes();
+
+

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Produk;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProdukController extends Controller
 {
@@ -22,21 +23,28 @@ class ProdukController extends Controller
      * Store a newly created product in the database.
      */
     public function store(Request $request)
-    {
-        // Validate the incoming request data
-        $validated = $request->validate([
-            'nama' => 'required|max:50',
-            'deskripsi' => 'required',
-            'kategori' => 'required',
-            'tanggal' => 'required|date',
-        ]);
+{
+    // Validate the incoming request data
+    $validated = $request->validate([
+        'nama' => 'required|max:50',
+        'deskripsi' => 'required',
+        'kategori' => 'required|in:Sembako,Minuman,Kue/Jajan,Paket Kue,Paket Snack,Tabungan dan Mebel',
+        'harga' => 'required',
+        'photo' => 'nullable|image|file|max:2048',
+        'tanggal' => 'required|date',
+    ]);
 
-        // Create a new product record
-        Produk::create($validated);
-
-        // Redirect after storing the product
-        return redirect()->route('produk.index')->with('success', 'Produk berhasil ditambahkan!');
+    // Handle file upload
+    if ($request->hasFile('photo')) {
+        $validated['photo'] = $request->file('photo')->store('photos', 'public');
     }
+
+    // Create a new product record
+    Produk::create($validated);
+
+    // Redirect after storing the product
+    return redirect()->route('produk.index')->with('success', 'Produk berhasil ditambahkan!');
+}
 
     /**
      * Display the specified product.
@@ -59,23 +67,40 @@ class ProdukController extends Controller
     /**
      * Update the specified product in the database.
      */
-    public function update(Request $request, $id)
-    {
-        // Validate the incoming request data
-        $validated = $request->validate([
-            'nama' => 'required|max:50',
-            'deskripsi' => 'required',
-            'kategori' => 'required',
-            'tanggal' => 'required|date',
-        ]);
+ public function update(Request $request, $id)
+{
+    // Validasi data yang masuk
+    $validated = $request->validate([
+        'nama' => 'required|max:50',
+        'deskripsi' => 'required',
+        'harga' => 'required|numeric|min:0', // Validasi harga sebagai angka
+        'kategori' => 'required|in:Sembako,Minuman,Kue/Jajan,Paket Kue,Paket Snack,Tabungan,Mebel',
+        'photo' => 'nullable|image|file|max:2048',
+        'tanggal' => 'required|date',
+    ]);
 
-        // Find the product by ID and update it
-        $produk = Produk::findOrFail($id);
-        $produk->update($validated);
+    // Temukan produk berdasarkan ID
+    $produk = Produk::findOrFail($id);
 
-        // Redirect after updating the product
-        return redirect()->route('produk.index')->with('success', 'Produk berhasil diperbarui!');
+    // Tangani unggahan file foto
+    if ($request->hasFile('photo')) {
+        // Hapus foto lama jika ada
+        if ($produk->photo) {
+            \Storage::disk('public')->delete($produk->photo);
+        }
+        // Simpan foto baru
+        $validated['photo'] = $request->file('photo')->store('photos', 'public');
+    } else {
+        // Jangan perbarui field photo jika tidak ada file baru yang diunggah
+        unset($validated['photo']);
     }
+
+    // Perbarui produk
+    $produk->update($validated);
+
+    // Redirect setelah memperbarui produk
+    return redirect()->route('produk.index')->with('success', 'Produk berhasil diperbarui!');
+}
 
     /**
      * Remove the specified product from the database.
@@ -84,6 +109,10 @@ class ProdukController extends Controller
     {
         $produk = Produk::findOrFail($id); // Find the product by ID
         $produk->delete(); // Delete the product
+         if ($produk->photo) {
+            Storage::disk('public')->delete($produk->photo);
+        }
+
 
         // Redirect after deleting the product
         return redirect()->route('produk.index')->with('success', 'Produk berhasil dihapus!');

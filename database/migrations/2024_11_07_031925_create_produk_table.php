@@ -15,7 +15,9 @@ return new class extends Migration
             $table->increments('id'); 
             $table->string('nama', 50);
             $table->string('deskripsi');
-            $table->string('kategori');
+            $table->bigInteger('harga');
+            $table->enum('kategori', ['Sembako', 'Minuman', 'Kue/Jajan', 'Paket Kue', 'Paket Snack', 'Tabungan dan Mebel']);
+            $table->text('photo');
             $table->date('tanggal');
             $table->timestamps(); // Adds both created_at and updated_at columns
         });

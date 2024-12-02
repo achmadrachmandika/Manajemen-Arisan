@@ -25,10 +25,22 @@
                             <p>{{ $produk->deskripsi }}</p>
                         </div>
 
+                        <div class="mb-3">
+                            <h6 class="font-weight-bold">Harga</h6>
+                            <p>{{ $produk->harga }}</p>
+                        </div>
+
                         <!-- Kategori -->
                         <div class="mb-3">
                             <h6 class="font-weight-bold">Kategori</h6>
                             <p>{{ $produk->kategori }}</p>
+                        </div>
+
+                        <div class="mb-3">
+                            <h6 class="font-weight-bold">Foto</h6>
+                            @if($produk->photo)
+                            <img src="{{ asset('storage/' . $produk->photo) }}" alt="{{ $produk->nama }}" style="max-width: 300px; height: 300px;">
+                            @endif
                         </div>
 
                         <!-- Tanggal -->

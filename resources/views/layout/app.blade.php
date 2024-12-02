@@ -16,20 +16,20 @@
     <meta name="keywords" content="Mordenize" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!--  Favicon -->
-    
+
     <link rel="shortcut icon" type="image/png"
         href="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/logos/favicon.ico" />
     <!-- Owl Carousel  -->
     <link rel="stylesheet" href="{{asset('assets/dist/libs/owl.carousel/dist/assets/owl.carousel.min.css')}}">
-    
+
     <!-- Core Css -->
     <link id="themeColors" rel="stylesheet" href="{{asset('assets/dist/css/style.min.css')}}" />
 
- 
+
 </head>
 
 <body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-behavior="sticky">
-    
+
     <!-- Preloader -->
     <div class="preloader">
         <img src="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/logos/favicon.ico"
@@ -48,7 +48,7 @@
             <!-- Sidebar scroll-->
             <div>
                 <div class="brand-logo d-flex align-items-center justify-content-between">
-                    <a href="index-2.html" class="text-nowrap logo-img">
+                    <a href="/dashboard" class="text-nowrap logo-img">
                         <img src="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/logos/dark-logo.svg"
                             class="dark-logo" width="180" alt="" />
                         <img src="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/logos/light-logo.svg"
@@ -62,48 +62,48 @@
 
                 @include('layout.sidebar')
                 {{-- <main class="py-4">--}}
-                   
 
-                   
+
+
                     <!-- End Sidebar navigation -->
             </div>
             <!-- End Sidebar scroll-->
         </aside>
         <!--  Sidebar End -->
         <!--  Main wrapper -->
-       <div class="body-wrapper">
+        <div class="body-wrapper">
             <!-- Header Start -->
             @include('layout.header')
 
             <!-- Main Content -->
-          <div class="content-wrapper">
+            <div class="content-wrapper">
                 @yield('content')
             </div>
-           
+
         </div>
-      
-   
+
+
     </div>
 
 </body>
 
-  
-    <!--  Import Js Files -->
-    @yield('script')
-    <script src="{{asset('assets/dist/libs/jquery/dist/jquery.min.js')}}"></script>
-    <script src="{{asset('assets/dist/libs/simplebar/dist/simplebar.min.js')}}"></script>
-    <script src="{{asset('assets/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
-    <!--  core files -->
-    <script src="{{asset('assets/dist/js/app.min.js')}}"></script>
-    <script src="{{asset('assets/dist/js/app.init.js')}}"></script>
-    <script src="{{asset('assets/dist/js/app-style-switcher.js')}}"></script>
-    <script src="{{asset('assets/dist/js/sidebarmenu.js')}}"></script>
-    <script src="{{asset('assets/dist/js/custom.js')}}"></script>
-    <!--  current page js files -->
-    <script src="{{asset('assets/dist/libs/owl.carousel/dist/owl.carousel.min.js')}}"></script>
-    
-    {{-- <script src="assets/dist/libs/apexcharts/dist/apexcharts.min.js"></script>
-    <script src="assets/dist/js/dashboard.js"></script> --}}
+
+<!--  Import Js Files -->
+@yield('script')
+<script src="{{asset('assets/dist/libs/jquery/dist/jquery.min.js')}}"></script>
+<script src="{{asset('assets/dist/libs/simplebar/dist/simplebar.min.js')}}"></script>
+<script src="{{asset('assets/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
+<!--  core files -->
+<script src="{{asset('assets/dist/js/app.min.js')}}"></script>
+<script src="{{asset('assets/dist/js/app.init.js')}}"></script>
+<script src="{{asset('assets/dist/js/app-style-switcher.js')}}"></script>
+<script src="{{asset('assets/dist/js/sidebarmenu.js')}}"></script>
+<script src="{{asset('assets/dist/js/custom.js')}}"></script>
+<!--  current page js files -->
+<script src="{{asset('assets/dist/libs/owl.carousel/dist/owl.carousel.min.js')}}"></script>
+
+{{-- <script src="assets/dist/libs/apexcharts/dist/apexcharts.min.js"></script>
+<script src="assets/dist/js/dashboard.js"></script> --}}
 </body>
 
 </html>

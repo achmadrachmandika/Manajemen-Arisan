@@ -26,13 +26,32 @@
                             </div>
 
                             <div class="mb-3">
+                                <label class="form-label">Harga Per Iuran</label>
+                                <input type="number" name="harga" class="form-control" placeholder="Harga" required min="0" step="0.01">
+                            </div>
+
+                            <div class="mb-3">
                                 <label class="form-label">Kategori</label>
-                                <input type="text" name="kategori" class="form-control" placeholder="Kategori" required>
+                                <select name="kategori" class="form-control" required>
+                                    <option value="">Pilih Kategori</option>
+                                    <option value="Sembako">Sembako</option>
+                                    <option value="Minuman">Minuman</option>
+                                    <option value="Kue/Jajan">Kue/Jajan</option>
+                                    <option value="Paket Kue">Paket Kue</option>
+                                    <option value="Paket Snack">Paket Snack</option>
+                                    <option value="Tabungan">Tabungan</option>
+                                    <option value="Mebel">Mebel</option>
+                                </select>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Pilih Tanggal</label>
                                 <input type="date" name="tanggal" class="form-control" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="photo">Photo</label>
+                                <input type="file" class="form-control" id="photo" name="photo">
                             </div>
 
                             <div class="mt-3 text-center">
