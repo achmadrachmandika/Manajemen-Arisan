@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArisanController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\PesertaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware(['role:super_admin|admin'])->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::resource('produk', ProdukController::class);
+        Route::resource('peserta', PesertaController::class);
     });
 
     // For Peserta: Can access Arisan

@@ -18,7 +18,7 @@
                 <span class="hide-menu">Produk</span>
             </a>
         </li>
-        <li class="sidebar-item">
+        {{-- <li class="sidebar-item">
             <a class="sidebar-link" href="index2.html" aria-expanded="false">
                 <span>
                     <i class="ti ti-shopping-cart"></i>
@@ -33,9 +33,9 @@
                 </span>
                 <span class="hide-menu">Transaksi</span>
             </a>
-        </li>
+        </li> --}}
         <li class="sidebar-item">
-            <a class="sidebar-link" href="index4.html" aria-expanded="false">
+            <a class="sidebar-link" href="{{ route('peserta.index') }}" aria-expanded="false">
                 <span>
                     <i class="ti ti-id-badge"></i>
                 </span>
@@ -51,20 +51,4 @@
             </a>
         </li>
 
-        <div class="fixed-profile p-3 bg-light-secondary rounded sidebar-ad mt-3">
-            <div class="hstack gap-3">
-                <div class="john-img">
-                    <img src="{{asset('assets/dist/images/profile/user-1.jpg')}}" class="rounded-circle" width="40" height="40"
-                        alt="">
-                </div>
-                <div class="john-title">
-                    <h6 class="mb-0 fs-4 fw-semibold">Mathew</h6>
-                    <span class="fs-2 text-dark">Designer</span>
-                </div>
-                <button class="border-0 bg-transparent text-primary ms-auto" tabindex="0" type="button" aria-label="logout"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="logout">
-                    <i class="ti ti-power fs-6"></i>
-                </button>
-            </div>
-        </div>
 </nav>

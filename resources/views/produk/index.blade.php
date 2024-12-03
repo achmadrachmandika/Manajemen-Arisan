@@ -22,6 +22,7 @@
                                     <th>Nomor</th>
                                     <th>Nama Produk</th>
                                     <th>Deskripsi</th>
+                                    <th>Harga</th>
                                     <th>Kategori</th>
                                     <th>Tanggal</th>
                                     <th>Foto</th>
