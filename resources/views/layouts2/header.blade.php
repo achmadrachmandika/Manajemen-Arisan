@@ -9,10 +9,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto py-0">
-                <form action="{{ route('logout') }}" method="POST" style="display:inline;">
-                    @csrf
-                    <button type="submit" class="btn btn-outline-primary">Log Out</button>
-                </form>
+             
                 <a href="index.html" class="nav-item nav-link active">Home</a>
                 <a href="about.html" class="nav-item nav-link">About</a>
                 <a href="service.html" class="nav-item nav-link">Service</a>
@@ -37,7 +34,21 @@
             </div>
             <button class="btn btn-primary btn-md-square d-flex flex-shrink-0 mb-3 mb-lg-0 rounded-circle me-3"
                 data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search"></i></button>
-            <a href="" class="btn btn-primary rounded-pill d-inline-flex flex-shrink-0 py-2 px-4">Order Now</a>
+            @if (auth()->check())
+            <!-- Jika sudah login, tampilkan nama pengguna dan tombol logout -->
+            <a href="#" class="btn btn-primary rounded-pill d-inline-flex flex-shrink-0 py-2 px-4">
+                Hi, {{ auth()->user()->name }}
+            </a>
+            <form action="{{ route('logout') }}" method="POST" style="display:inline;">
+                @csrf
+                <button type="submit" class="btn btn-outline-primary">Log Out</button>
+            </form>
+            @else
+            <!-- Jika belum login, tampilkan tombol login -->
+            <a href="{{ route('login') }}" class="btn btn-primary rounded-pill d-inline-flex flex-shrink-0 py-2 px-4">
+                Login
+            </a>
+            @endif
         </div>
     </nav>
 

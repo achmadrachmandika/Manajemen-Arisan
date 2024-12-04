@@ -44,11 +44,11 @@
                                     @endif
                                     </td>
                                     <td>
-                                        <a href="{{ route('produk.show', $item->id) }}"
+                                        <a href="{{ route('produk.show', $item->produk_id) }}"
                                             class="btn btn-info btn-sm">Detail</a>
-                                        <a href="{{ route('produk.edit', $item->id) }}"
+                                        <a href="{{ route('produk.edit', $item->produk_id) }}"
                                             class="btn btn-warning btn-sm">Edit</a>
-                                        <form id="deleteForm" action="{{ route('produk.destroy', $item->id) }}" method="POST" style="display:inline;">
+                                        <form id="deleteForm" action="{{ route('produk.destroy', $item->produk_id) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="button" class="btn btn-danger btn-sm"

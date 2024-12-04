@@ -13,7 +13,7 @@ class Produk extends Model
     protected $table = 'produk';
 
     // Define the primary key if it's not the default 'id'
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'produk_id';
 
     // Define the fields that are mass assignable
     protected $fillable = [
@@ -32,10 +32,12 @@ class Produk extends Model
         'updated_at' => 'datetime',
     ];
     
-    public function users()
+    // Model Produk.php
+public function users()
 {
-    return $this->belongsToMany(User::class);
+    return $this->belongsToMany(User::class, 'user_produk', 'produk_id', 'user_id');
 }
+
 }
 
 

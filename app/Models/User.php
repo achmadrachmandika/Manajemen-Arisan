@@ -44,8 +44,10 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function produk()
+    // Model User.php
+public function produk()
 {
-    return $this->belongsToMany(Produk::class);
+    return $this->belongsToMany(Produk::class, 'user_produk', 'user_id', 'produk_id');
 }
+
 }

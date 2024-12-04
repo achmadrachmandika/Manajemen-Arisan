@@ -5,6 +5,7 @@ use App\Http\Controllers\ArisanController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\PesertaController;
+use App\Http\Controllers\AdminUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,11 @@ Route::middleware('auth')->group(function () {
 
     // For Super Admin and Admin: Can access Dashboard and Produk
     Route::middleware(['role:super_admin|admin'])->group(function () {
+        // Route untuk halaman daftar pengguna yang belum di-approve
+Route::get('admin/users', [AdminUserController::class, 'index'])->name('admin.users.index');
+
+// Route untuk melakukan approve pada pengguna
+Route::post('admin/approved-users', [AdminUserController::class, 'approvedUsers'])->name('admin.users.approved');
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::resource('produk', ProdukController::class);
         Route::resource('peserta', PesertaController::class);

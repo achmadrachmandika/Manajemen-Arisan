@@ -51,4 +51,22 @@
             </a>
         </li>
 
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="{{ route('admin.users.index') }}" aria-expanded="false">
+                <span>
+                    <i class="ti ti-activity-heartbeat"></i>
+                </span>
+                <span class="hide-menu">Laporan</span>
+            </a>
+        </li>
+
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="{{ route('admin.users.approved') }}" aria-expanded="false">
+                <span>
+                    <i class="ti ti-activity-heartbeat"></i>
+                </span>
+                <span class="hide-menu">Daftar Peserta</span>
+            </a>
+        </li>
+
 </nav>
