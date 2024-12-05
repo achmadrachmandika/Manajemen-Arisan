@@ -11,7 +11,7 @@
                         <h6 class="card-subtitle text-muted">Ubah informasi produk yang telah ada.</h6>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('produk.update', $produk->id) }}" method="POST">
+                        <form action="{{ route('produk.update', $produk->produk_id) }}" method="POST">
                             @csrf
                             @method('PUT')
 

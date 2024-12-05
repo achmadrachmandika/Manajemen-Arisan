@@ -35,15 +35,15 @@
             </a>
         </li> --}}
         <li class="sidebar-item">
-            <a class="sidebar-link" href="{{ route('peserta.index') }}" aria-expanded="false">
+            <a class="sidebar-link" href="{{ route('admin.users.approved') }}" aria-expanded="false">
                 <span>
                     <i class="ti ti-id-badge"></i>
                 </span>
-                <span class="hide-menu">Peserta</span>
+                <span class="hide-menu">Daftar Peserta</span>
             </a>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link" href="index5.html" aria-expanded="false">
+            <a class="sidebar-link" href="#" aria-expanded="false">
                 <span>
                     <i class="ti ti-activity-heartbeat"></i>
                 </span>
@@ -56,17 +56,9 @@
                 <span>
                     <i class="ti ti-activity-heartbeat"></i>
                 </span>
-                <span class="hide-menu">Laporan</span>
+                <span class="hide-menu">Persetujuan Peserta</span>
             </a>
         </li>
 
-        <li class="sidebar-item">
-            <a class="sidebar-link" href="{{ route('admin.users.approved') }}" aria-expanded="false">
-                <span>
-                    <i class="ti ti-activity-heartbeat"></i>
-                </span>
-                <span class="hide-menu">Daftar Peserta</span>
-            </a>
-        </li>
 
 </nav>

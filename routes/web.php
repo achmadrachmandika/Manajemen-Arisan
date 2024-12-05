@@ -23,6 +23,8 @@ use App\Http\Controllers\AdminUserController;
 Route::get('/', function () {
     return view('arisan');
 });
+Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+
 
 // Routes that require authentication
 Route::middleware('auth')->group(function () {
@@ -30,10 +32,15 @@ Route::middleware('auth')->group(function () {
     // For Super Admin and Admin: Can access Dashboard and Produk
     Route::middleware(['role:super_admin|admin'])->group(function () {
         // Route untuk halaman daftar pengguna yang belum di-approve
+// Route untuk menampilkan daftar pengguna yang belum di-approve
 Route::get('admin/users', [AdminUserController::class, 'index'])->name('admin.users.index');
 
 // Route untuk melakukan approve pada pengguna
-Route::post('admin/approved-users', [AdminUserController::class, 'approvedUsers'])->name('admin.users.approved');
+  Route::get('admin/approved-users', [AdminUserController::class, 'approvedUsers'])->name('admin.users.approved');
+    Route::post('admin/approved-users/{user}/approve', [AdminUserController::class, 'approve'])->name('admin.users.approve');
+
+// Route to approve a user (this should be a POST request)
+
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::resource('produk', ProdukController::class);
         Route::resource('peserta', PesertaController::class);

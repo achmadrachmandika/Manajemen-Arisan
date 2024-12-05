@@ -13,8 +13,6 @@
                         <h6 class="card-subtitle text-muted">Berisi data peserta yang mengikuti arisan.</h6>
                     </div>
                     <div class="card-body">
-                        <a type="button" href="{{ route('peserta.create') }}"
-                            class="btn btn-success rounded-5 mb-3">Tambah Data</a>
 
                         <table id="datatables-reponsive" class="table table-striped" style="width:100%">
                             <thead>
