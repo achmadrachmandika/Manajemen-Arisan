@@ -1,7 +1,7 @@
 @extends('layouts2.app')
 @section('content')
 
-<div class="carousel-header">
+{{-- <div class="carousel-header">
     <div id="carouselId" class="carousel slide" data-bs-ride="carousel">
         <ol class="carousel-indicators">
             <li data-bs-target="#carouselId" data-bs-slide-to="0" class="active"></li>
@@ -73,7 +73,7 @@
             <span class="visually-hidden">Next</span>
         </button>
     </div>
-</div>
+</div> --}}
 
 <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-fullscreen">
@@ -99,46 +99,26 @@
 <div class="container-fluid feature bg-light py-5">
     <div class="container py-5">
         <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
-            <h4 class="text-uppercase text-primary">Our Feature</h4>
-            <h1 class="display-3 text-capitalize mb-3">A Trusted Name In Bottled Water Industry</h1>
+            <h1 class="display-3 text-capitalize mb-3">Daftar Arisan yang diikuti {{ Auth::user()->name }}</h1>
         </div>
         <div class="row g-4">
-            <div class=" col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.2s">
+            @foreach(Auth::user()->produk as $item)
+            <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.2s">
                 <div class="feature-item p-4">
-                    <div class="feature-icon mb-3"><i class="fas fa-hand-holding-water text-white fa-3x"></i></div>
-                    <a href="#" class="h4 mb-3">Quality Check</a>
-                    <p class="mb-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero repellat deleniti
-                        necessitatibus</p>
-                    <a href="#" class="btn text-secondary">Read More <i class="fa fa-angle-right"></i></a>
+                    <div class="feature-icon mb-3">
+                        @if($item->photo)
+                        <img src="{{ Storage::url($item->photo) }}" alt="{{ $item->nama }}" class="img-fluid">
+                        @else
+                        <i class="fas fa-box-open text-white fa-3x"></i>
+                        @endif
+                    </div>
+                    <a href="#" class="h4 mb-3">{{ $item->nama }}</a>
+                    <p class="mb-3">{{ $item->deskripsi }}</p>
+                    <p class="mb-3">Rp. {{ number_format($item->harga, 0, ',', '.') }}</p>
+                    <a href="#" class="btn text-secondary">Lakukan Pembayaran <i class="fa fa-angle-right"></i></a>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.4s">
-                <div class="feature-item p-4">
-                    <div class="feature-icon mb-3"><i class="fas fa-filter text-white fa-3x"></i></div>
-                    <a href="#" class="h4 mb-3">5 Steps Filtration</a>
-                    <p class="mb-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero repellat deleniti
-                        necessitatibus</p>
-                    <a href="#" class="btn text-secondary">Read More <i class="fa fa-angle-right"></i></a>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.6s">
-                <div class="feature-item p-4">
-                    <div class="feature-icon mb-3"><i class="fas fa-recycle text-white fa-3x"></i></div>
-                    <a href="#" class="h4 mb-3">Composition</a>
-                    <p class="mb-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero repellat deleniti
-                        necessitatibus</p>
-                    <a href="#" class="btn text-secondary">Read More <i class="fa fa-angle-right"></i></a>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.8s">
-                <div class="feature-item p-4">
-                    <div class="feature-icon mb-3"><i class="fas fa-microscope text-white fa-3x"></i></div>
-                    <a href="#" class="h4 mb-3">Lab Control</a>
-                    <p class="mb-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero repellat deleniti
-                        necessitatibus</p>
-                    <a href="#" class="btn text-secondary">Read More <i class="fa fa-angle-right"></i></a>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </div>
@@ -146,7 +126,7 @@
 
 
 <!-- About Start -->
-<div class="container-fluid about overflow-hidden py-5">
+{{-- <div class="container-fluid about overflow-hidden py-5">
     <div class="container py-5">
         <div class="row g-5">
             <div class="col-xl-6 wow fadeInLeft" data-wow-delay="0.2s">
@@ -204,12 +184,21 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 <!-- About End -->
+
+<div class="container-fluid feature bg-light py-5">
+    <div class="container py-5">
+        <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
+            <h1 class="display-3 text-capitalize mb-3">Laporan Iuran {{ Auth::user()->name }}</h1>
+        </div>
+       <h1>Riwayat Pembayaran</h1>
+    </div>
+</div>
 
 
 <!-- Fact Counter -->
-<div class="container-fluid counter py-5">
+{{-- <div class="container-fluid counter py-5">
     <div class="container py-5">
         <div class="row g-5">
             <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.2s">
@@ -262,128 +251,11 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 <!-- Fact Counter -->
 
 <!-- Service Start -->
-<div class="container-fluid service bg-light overflow-hidden py-5">
-    <div class="container py-5">
-        <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
-            <h4 class="text-uppercase text-primary">Our Service</h4>
-            <h1 class="display-3 text-capitalize mb-3">Protect Your Family with Best Water</h1>
-        </div>
-        <div class="row gx-0 gy-4 align-items-center">
-            <div class="col-lg-6 col-xl-4 wow fadeInLeft" data-wow-delay="0.2s">
-                <div class="service-item rounded p-4 mb-4">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="d-flex">
-                                <div class="service-content text-end">
-                                    <a href="#" class="h4 d-inline-block mb-3">Residential Waters</a>
-                                    <p class="mb-0">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quas
-                                        provident maiores quisquam.</p>
-                                </div>
-                                <div class="ps-4">
-                                    <div class="service-btn"><i class="fas fa-hand-holding-water text-white fa-2x"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="service-item rounded p-4 mb-4">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="d-flex">
-                                <div class="service-content text-end">
-                                    <a href="#" class="h4 d-inline-block mb-3">Commercial Waters</a>
-                                    <p class="mb-0">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quas
-                                        provident maiores quisquam.</p>
-                                </div>
-                                <div class="ps-4">
-                                    <div class="service-btn"><i class="fas fa-dumpster-fire text-white fa-2x"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="service-item rounded p-4 mb-0">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="d-flex">
-                                <div class="service-content text-end">
-                                    <a href="#" class="h4 d-inline-block mb-3">Filtration Plants</a>
-                                    <p class="mb-0">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quas
-                                        provident maiores quisquam.</p>
-                                </div>
-                                <div class="ps-4">
-                                    <div class="service-btn"><i class="fas fa-filter text-white fa-2x"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.3s">
-                <div class="bg-transparent">
-                    <img src="assets/assets/img/water.png" class="img-fluid w-100" alt="">
-                </div>
-            </div>
-            <div class="col-lg-6 col-xl-4 wow fadeInRight" data-wow-delay="0.2s">
-                <div class="service-item rounded p-4 mb-4">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="d-flex">
-                                <div class="pe-4">
-                                    <div class="service-btn"><i
-                                            class="fas fa-assistive-listening-systems text-white fa-2x"></i></div>
-                                </div>
-                                <div class="service-content">
-                                    <a href="#" class="h4 d-inline-block mb-3">Water Softening</a>
-                                    <p class="mb-0">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quas
-                                        provident maiores quisquam.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="service-item rounded p-4 mb-4">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="d-flex">
-                                <div class="pe-4">
-                                    <div class="service-btn"><i class="fas fa-recycle text-white fa-2x"></i></div>
-                                </div>
-                                <div class="service-content">
-                                    <a href="#" class="h4 d-inline-block mb-3">Market Research</a>
-                                    <p class="mb-0">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quas
-                                        provident maiores quisquam.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="service-item rounded p-4 mb-0">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="d-flex">
-                                <div class="pe-4">
-                                    <div class="service-btn"><i class="fas fa-project-diagram text-white fa-2x"></i>
-                                    </div>
-                                </div>
-                                <div class="service-content">
-                                    <a href="#" class="h4 d-inline-block mb-3">Project Planning</a>
-                                    <p class="mb-0">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quas
-                                        provident maiores quisquam.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 <!-- Service End -->
 
 
@@ -391,315 +263,38 @@
 <div class="container-fluid product py-5">
     <div class="container py-5">
         <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
-            <h4 class="text-uppercase text-primary">Our Products</h4>
-            <h1 class="display-3 text-capitalize mb-3">We Deliver Best Quality Bottle Packs.</h1>
+            <h4 class="text-uppercase text-primary">Produk Arisan yang tersedia</h4>
+            <h1 class="display-3 text-capitalize mb-3"></h1>
         </div>
         <div class="row g-4 justify-content-center">
-            <div class="col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.2s">
-                <div class="product-item">
-                    <img src="assets/assets/img/product-3.png" class="img-fluid w-100 rounded-top" alt="Image">
-                    <div class="product-content bg-light text-center rounded-bottom p-4">
-                        <p>2L 1 Bottle</p>
-                        <a href="#" class="h4 d-inline-block mb-3">Mineral Water Bottle</a>
-                        <p class="fs-4 text-primary mb-3">$35:00</p>
-                        <a href="#" class="btn btn-secondary rounded-pill py-2 px-4">Read More</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.4s">
-                <div class="product-item">
-                    <img src="assets/assets/img/product-2.png" class="img-fluid w-100 rounded-top" alt="Image">
-                    <div class="product-content bg-light text-center rounded-bottom p-4">
-                        <p>4L 2 Bottles</p>
-                        <a href="#" class="h4 d-inline-block mb-3">RO Water Bottle</a>
-                        <p class="fs-4 text-primary mb-3">$70:00</p>
-                        <a href="#" class="btn btn-secondary rounded-pill py-2 px-4">Read More</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.6s">
-                <div class="product-item">
-                    <img src="assets/assets/img/product-1.png" class="img-fluid w-100 rounded-top" alt="Image">
-                    <div class="product-content bg-light text-center rounded-bottom p-4">
-                        <p>6L 3 Bottles</p>
-                        <a href="#" class="h4 d-inline-block mb-3">UV Water Bottle</a>
-                        <p class="fs-4 text-primary mb-3">$100:00</p>
-                        <a href="#" class="btn btn-secondary rounded-pill py-2 px-4">Read More</a>
-                    </div>
-                </div>
+    @foreach($produk as $item)
+    <div class="col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="{{ $loop->iteration * 0.2 }}s">
+        <div class="product-item">
+            @if($item->photo) <!-- Jika produk memiliki gambar -->
+            <img src="{{ Storage::url($item->photo) }}" class="img-fluid w-100 rounded-top" alt="{{ $item->nama }}">
+            @else
+            <img src="assets/assets/img/default-product.png" class="img-fluid w-100 rounded-top" alt="Image"> <!-- Gambar default jika tidak ada -->
+            @endif
+            <div class="product-content bg-light text-center rounded-bottom p-4">
+                <p>{{ $item->quantity }} {{ $item->unit }}</p>
+                <a href="#" class="h4 d-inline-block mb-3">{{ $item->nama }}</a>
+                <p class="fs-4 text-primary mb-3">Rp. {{ number_format($item->harga, 0, ',', '.') }}</p>
+                <a href="#" class="btn btn-secondary rounded-pill py-2 px-4">Read More</a>
             </div>
         </div>
+    </div>
+    @endforeach
+</div>
+
     </div>
 </div>
 <!-- Products End -->
 
 
 <!-- Blog Start -->
-<div class="container-fluid blog pb-5">
-    <div class="container pb-5">
-        <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
-            <h4 class="text-uppercase text-primary">Our Blog</h4>
-            <h1 class="display-3 text-capitalize mb-3">Latest Blog & News</h1>
-        </div>
-        <div class="row g-4 justify-content-center">
-            <div class="col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.2s">
-                <div class="blog-item">
-                    <div class="blog-img">
-                        <img src="assets/assets/img/blog-1.jpg" class="img-fluid rounded-top w-100" alt="">
-                        <div class="blog-date px-4 py-2"><i class="fa fa-calendar-alt me-1"></i> Jan 12 2025</div>
-                    </div>
-                    <div class="blog-content rounded-bottom p-4">
-                        <a href="#" class="h4 d-inline-block mb-3">Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Unde</a>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, officiis?</p>
-                        <a href="#" class="fw-bold text-secondary">Read More <i class="fa fa-angle-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.4s">
-                <div class="blog-item">
-                    <div class="blog-img">
-                        <img src="assets/assets/img/blog-2.jpg" class="img-fluid rounded-top w-100" alt="">
-                        <div class="blog-date px-4 py-2"><i class="fa fa-calendar-alt me-1"></i> Jan 12 2025</div>
-                    </div>
-                    <div class="blog-content rounded-bottom p-4">
-                        <a href="#" class="h4 d-inline-block mb-3">Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Unde</a>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, officiis?</p>
-                        <a href="#" class="fw-bold text-secondary">Read More <i class="fa fa-angle-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.6s">
-                <div class="blog-item">
-                    <div class="blog-img">
-                        <img src="assets/assets/img/blog-3.jpg" class="img-fluid rounded-top w-100" alt="">
-                        <div class="blog-date px-4 py-2"><i class="fa fa-calendar-alt me-1"></i> Jan 12 2025</div>
-                    </div>
-                    <div class="blog-content rounded-bottom p-4">
-                        <a href="#" class="h4 d-inline-block mb-3">Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Unde</a>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, officiis?</p>
-                        <a href="#" class="fw-bold text-secondary">Read More <i class="fa fa-angle-right"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <!-- Blog End -->
 
 
-<!-- Team Start -->
-<div class="container-fluid team pb-5">
-    <div class="container pb-5">
-        <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
-            <h4 class="text-uppercase text-primary">Our Team</h4>
-            <h1 class="display-3 text-capitalize mb-3">What is Really seo & How Can I Use It?</h1>
-        </div>
-        <div class="row g-4">
-            <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.2s">
-                <div class="team-item p-4">
-                    <div class="team-inner rounded">
-                        <div class="team-img">
-                            <img src="assets/assets/img/team-1.jpg" class="img-fluid rounded-top w-100" alt="Image">
-                            <div class="team-share">
-                                <a class="btn btn-secondary btn-md-square rounded-pill text-white mx-1" href=""><i
-                                        class="fas fa-share-alt"></i></a>
-                            </div>
-                            <div class="team-icon rounded-pill py-2 px-2">
-                                <a class="btn btn-secondary btn-sm-square rounded-pill mx-1" href=""><i
-                                        class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-secondary btn-sm-square rounded-pill me-1" href=""><i
-                                        class="fab fa-twitter"></i></a>
-                                <a class="btn btn-secondary btn-sm-square rounded-pill me-1" href=""><i
-                                        class="fab fa-linkedin-in"></i></a>
-                                <a class="btn btn-secondary btn-sm-square rounded-pill me-1" href=""><i
-                                        class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="bg-light rounded-bottom text-center py-4">
-                            <h4 class="mb-3">Hard Branots</h4>
-                            <p class="mb-0">CEO & Founder</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.4s">
-                <div class="team-item p-4">
-                    <div class="team-inner rounded">
-                        <div class="team-img">
-                            <img src="assets/assets/img/team-2.jpg" class="img-fluid rounded-top w-100" alt="Image">
-                            <div class="team-share">
-                                <a class="btn btn-secondary btn-md-square rounded-pill text-white mx-1" href=""><i
-                                        class="fas fa-share-alt"></i></a>
-                            </div>
-                            <div class="team-icon rounded-pill py-2 px-2">
-                                <a class="btn btn-secondary btn-sm-square rounded-pill mx-1" href=""><i
-                                        class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-secondary btn-sm-square rounded-pill me-1" href=""><i
-                                        class="fab fa-twitter"></i></a>
-                                <a class="btn btn-secondary btn-sm-square rounded-pill me-1" href=""><i
-                                        class="fab fa-linkedin-in"></i></a>
-                                <a class="btn btn-secondary btn-sm-square rounded-pill me-1" href=""><i
-                                        class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="bg-light rounded-bottom text-center py-4">
-                            <h4 class="mb-3">Hard Branots</h4>
-                            <p class="mb-0">CEO & Founder</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.6s">
-                <div class="team-item p-4">
-                    <div class="team-inner rounded">
-                        <div class="team-img">
-                            <img src="assets/assets/img/team-3.jpg" class="img-fluid rounded-top w-100" alt="Image">
-                            <div class="team-share">
-                                <a class="btn btn-secondary btn-md-square rounded-pill text-white mx-1" href=""><i
-                                        class="fas fa-share-alt"></i></a>
-                            </div>
-                            <div class="team-icon rounded-pill py-2 px-2">
-                                <a class="btn btn-secondary btn-sm-square rounded-pill mx-1" href=""><i
-                                        class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-secondary btn-sm-square rounded-pill me-1" href=""><i
-                                        class="fab fa-twitter"></i></a>
-                                <a class="btn btn-secondary btn-sm-square rounded-pill me-1" href=""><i
-                                        class="fab fa-linkedin-in"></i></a>
-                                <a class="btn btn-secondary btn-sm-square rounded-pill me-1" href=""><i
-                                        class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="bg-light rounded-bottom text-center py-4">
-                            <h4 class="mb-3">Hard Branots</h4>
-                            <p class="mb-0">CEO & Founder</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.8s">
-                <div class="team-item p-4">
-                    <div class="team-inner rounded">
-                        <div class="team-img">
-                            <img src="assets/assets/img/team-4.jpg" class="img-fluid rounded-top w-100" alt="Image">
-                            <div class="team-share">
-                                <a class="btn btn-secondary btn-md-square rounded-pill text-white mx-1" href=""><i
-                                        class="fas fa-share-alt"></i></a>
-                            </div>
-                            <div class="team-icon rounded-pill py-2 px-2">
-                                <a class="btn btn-secondary btn-sm-square rounded-pill mx-1" href=""><i
-                                        class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-secondary btn-sm-square rounded-pill me-1" href=""><i
-                                        class="fab fa-twitter"></i></a>
-                                <a class="btn btn-secondary btn-sm-square rounded-pill me-1" href=""><i
-                                        class="fab fa-linkedin-in"></i></a>
-                                <a class="btn btn-secondary btn-sm-square rounded-pill me-1" href=""><i
-                                        class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="bg-light rounded-bottom text-center py-4">
-                            <h4 class="mb-3">Hard Branots</h4>
-                            <p class="mb-0">CEO & Founder</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <!-- Team End -->
 
-<!-- Testimonial Start -->
-<div class="container-fluid testimonial pb-5">
-    <div class="container pb-5">
-        <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
-            <h4 class="text-uppercase text-primary">Testimonials</h4>
-            <h1 class="display-3 text-capitalize mb-3">Our clients reviews.</h1>
-        </div>
-        <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.3s">
-            <div class="testimonial-item text-center p-4">
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt pariatur officiis quis molestias,
-                    sit iure sunt voluptatibus accusantium laboriosam dolore.
-                </p>
-                <div class="d-flex justify-content-center mb-4">
-                    <img src="assets/assets/img/testimonial-1.jpg" class="img-fluid border border-4 border-primary"
-                        style="width: 100px; height: 100px; border-radius: 50px;" alt="">
-                </div>
-                <div class="d-block">
-                    <h4 class="text-dark">Client Name</h4>
-                    <p class="m-0 pb-3">Profession</p>
-                    <div class="d-flex justify-content-center text-secondary">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-item text-center p-4">
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt pariatur officiis quis molestias,
-                    sit iure sunt voluptatibus accusantium laboriosam dolore.
-                </p>
-                <div class="d-flex justify-content-center mb-4">
-                    <img src="assets/assets/img/testimonial-2.jpg" class="img-fluid border border-4 border-primary"
-                        style="width: 100px; height: 100px; border-radius: 50px;" alt="">
-                </div>
-                <div class="d-block">
-                    <h4 class="text-dark">Client Name</h4>
-                    <p class="m-0 pb-3">Profession</p>
-                    <div class="d-flex justify-content-center text-secondary">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-item text-center p-4">
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt pariatur officiis quis molestias,
-                    sit iure sunt voluptatibus accusantium laboriosam dolore.
-                </p>
-                <div class="d-flex justify-content-center mb-4">
-                    <img src="assets/assets/img/testimonial-3.jpg" class="img-fluid border border-4 border-primary"
-                        style="width: 100px; height: 100px; border-radius: 50px;" alt="">
-                </div>
-                <div class="d-block">
-                    <h4 class="text-dark">Client Name</h4>
-                    <p class="m-0 pb-3">Profession</p>
-                    <div class="d-flex justify-content-center text-secondary">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-item text-center p-4">
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt pariatur officiis quis molestias,
-                    sit iure sunt voluptatibus accusantium laboriosam dolore.
-                </p>
-                <div class="d-flex justify-content-center mb-4">
-                    <img src="assets/assets/img/testimonial-3.jpg" class="img-fluid border border-4 border-primary"
-                        style="width: 100px; height: 100px; border-radius: 50px;" alt="">
-                </div>
-                <div class="d-block">
-                    <h4 class="text-dark">Client Name</h4>
-                    <p class="m-0 pb-3">Profession</p>
-                    <div class="d-flex justify-content-center text-secondary">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection

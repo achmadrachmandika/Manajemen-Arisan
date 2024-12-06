@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\PesertaController;
 use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\Auth\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,9 +22,13 @@ use App\Http\Controllers\AdminUserController;
 
 // Public route
 Route::get('/', function () {
-    return view('arisan');
+    return view('home');
 });
+// Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+// Route::get('register/produk', [RegisterController::class, 'showRegistrationForm'])->name('register_produk');
+
 Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+
 
 
 // Routes that require authentication

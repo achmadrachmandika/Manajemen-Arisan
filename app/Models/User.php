@@ -51,5 +51,9 @@ public function produk()
 {
     return $this->belongsToMany(Produk::class, 'user_produk', 'user_id', 'produk_id');
 }
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
 
 }

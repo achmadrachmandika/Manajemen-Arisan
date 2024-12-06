@@ -55,8 +55,10 @@
                                 </div>
 
                                 <div class="form-floating mb-3">
-                                    <input id="alamat" type="text" class="form-control form-control-lg @error('alamat') is-invalid @enderror" name="alamat"
-                                        value="{{ old('alamat') }}" required autocomplete="alamat" autofocus>
+                                    <input id="alamat" type="text"
+                                        class="form-control form-control-lg @error('alamat') is-invalid @enderror"
+                                        name="alamat" value="{{ old('alamat') }}" required autocomplete="alamat"
+                                        autofocus>
                                     <label for="alamat" class="form-label">Alamat Lengkap</label>
                                     @error('alamat')
                                     <span class="invalid-feedback" role="alert">
@@ -66,8 +68,10 @@
                                 </div>
 
                                 <div class="form-floating mb-3">
-                                    <input id="no_wa" type="text" class="form-control form-control-lg @error('no_wa') is-invalid @enderror" name="no_wa"
-                                        value="{{ old('no_wa') }}" required autocomplete="no_wa" autofocus inputmode="numeric" pattern="[0-9]*"
+                                    <input id="no_wa" type="text"
+                                        class="form-control form-control-lg @error('no_wa') is-invalid @enderror"
+                                        name="no_wa" value="{{ old('no_wa') }}" required autocomplete="no_wa" autofocus
+                                        inputmode="numeric" pattern="[0-9]*"
                                         oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                                     <label for="no_wa" class="form-label">Nomor WA</label>
                                     @error('no_wa')
