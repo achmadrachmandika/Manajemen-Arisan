@@ -60,8 +60,15 @@ class RegisterController extends Controller
     }
 
     protected function registered(Request $request, $user)
-    {
-        // Setelah registrasi, langsung arahkan ke halaman login dan beri pesan
-        return redirect($this->redirectTo)->with('status', 'Akun Anda telah terdaftar. Mohon menunggu konfirmasi dari admin.');
+{
+    // Check if the user is approved or still pending
+    if ($user->is_approved === true) {
+        // Redirect to the home page if the account is approved
+        return redirect($this->redirectTo)->with('status', 'Akun Anda telah terdaftar dan disetujui. Selamat datang!');
+    } else {
+        // Redirect to the 'approved' page if the account is not approved
+        return redirect()->route('approved')->with('status', 'Akun Anda telah terdaftar. Mohon menunggu konfirmasi dari admin.');
     }
+}
+
 }

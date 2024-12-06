@@ -55,4 +55,19 @@ class AdminUserController extends Controller
         $approvedUsers = User::where('is_approved', true)->get();
         return view('admin.users.approved', compact('approvedUsers'));
     }
+
+       public function delete($id)
+    {
+        $user = User::findOrFail($id);
+        
+        // Optionally, check if user is an admin or super_admin
+        if ($user->hasRole('admin') || $user->hasRole('super_admin')) {
+            return redirect()->back()->with('error', 'Tidak dapat menghapus pengguna dengan peran admin atau super admin.');
+        }
+
+        // Delete the user
+        $user->delete();
+
+        return redirect()->route('admin.users.index')->with('success', 'User berhasil dihapus.');
+    }
 }

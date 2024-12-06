@@ -21,9 +21,11 @@
         href="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/logos/favicon.ico" />
     <!-- Owl Carousel  -->
     <link rel="stylesheet" href="{{asset('assets/dist/libs/owl.carousel/dist/assets/owl.carousel.min.css')}}">
+    
 
     <!-- Core Css -->
     <link id="themeColors" rel="stylesheet" href="{{asset('assets/dist/css/style.min.css')}}" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 </head>

@@ -35,9 +35,38 @@
                 </select>
                 <button type="submit">Approve</button>
             </form>
+            <form action="{{ route('admin.users.delete', $user->id) }}" method="POST" id="delete-form-{{ $user->id }}"
+                style="display:inline-block;">
+                @csrf
+                @method('DELETE')
+                <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete({{ $user->id }})">Hapus</button>
+            </form>
         </div>
+
+        <!-- Button Delete -->
+       
     </div>
     @endif
     @endforeach
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function confirmDelete(userId) {
+        Swal.fire({
+            title: 'Apa anda yakin ingin menghapus peserta ini?',
+            // text: 'You will not be able to recover this record!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Trigger the form submission after confirmation
+                document.getElementById('delete-form-' + userId).submit();
+            }
+        });
+    }
+</script>
 @endsection

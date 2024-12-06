@@ -22,12 +22,15 @@ use App\Http\Controllers\Auth\RegisterController;
 
 // Public route
 Route::get('/', function () {
-    return view('home');
+    return view('auth.login');
 });
 // Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 // Route::get('register/produk', [RegisterController::class, 'showRegistrationForm'])->name('register_produk');
 
 Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::get('approved', function () {
+    return view('approved');
+})->name('approved');
 
 
 
@@ -41,6 +44,7 @@ Route::middleware('auth')->group(function () {
 Route::get('admin/users', [AdminUserController::class, 'index'])->name('admin.users.index');
 
 // Route untuk melakukan approve pada pengguna
+Route::delete('admin/users/{id}/delete', [AdminUserController::class, 'delete'])->name('admin.users.delete');
   Route::get('admin/approved-users', [AdminUserController::class, 'approvedUsers'])->name('admin.users.approved');
     Route::post('admin/approved-users/{user}/approve', [AdminUserController::class, 'approve'])->name('admin.users.approve');
 

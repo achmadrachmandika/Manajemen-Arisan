@@ -20,9 +20,10 @@
                                     <th>Nomor WA</th>
                                     <th>Alamat</th>
                                     <th>Email</th>
-                                    <th>Produk yang Diikuti</th> <!-- Kolom baru untuk produk -->
+                                    <th>Produk yang Diikuti</th>
                                     <th>Deskripsi</th>
                                     <th>Harga</th>
+                                    <th>Aksi</th> <!-- Kolom baru untuk tombol aksi -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -33,23 +34,22 @@
                                     <td>{{ $user->alamat }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>
-                                        <!-- Menampilkan produk yang diikuti -->
                                         @foreach($user->produk as $produk)
                                         <span class="badge bg-info">{{ $produk->nama }}</span><br>
                                         @endforeach
                                     </td>
                                     <td>
-                                        <!-- Menampilkan produk yang diikuti -->
                                         @foreach($user->produk as $produk)
                                         <span class="badge bg-info">{{ $produk->deskripsi }}</span><br>
                                         @endforeach
                                     </td>
                                     <td>
-                                        <!-- Menampilkan harga produk -->
                                         @foreach($user->produk as $produk)
-                                        <span class="badge bg-success">Rp. {{ number_format($produk->harga, 0, ',', '.') }}/ Minggu</span><br>
+                                        <span class="badge bg-success">Rp. {{ number_format($produk->harga, 0, ',', '.')
+                                            }}/ Minggu</span><br>
                                         @endforeach
                                     </td>
+                               
                                 </tr>
                                 @endforeach
                             </tbody>

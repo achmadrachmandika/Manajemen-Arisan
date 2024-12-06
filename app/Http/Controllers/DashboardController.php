@@ -11,9 +11,7 @@ class DashboardController extends Controller
 {
     public function index(){
     $produkCount = Produk::count(); // Retrieve all products
-    $pesertaCount = User::whereHas('role', function ($query) {
-            $query->where('name', 'peserta');
-        })->count();
+    $pesertaCount = User::count();
         return view ('dashboard', compact('produkCount', 'pesertaCount'));
     }
 }
