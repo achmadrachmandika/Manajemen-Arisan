@@ -9,10 +9,15 @@ use Illuminate\Support\Facades\Storage;
 
 class ProdukController extends Controller
 {
-    public function index(){
-        $produk = Produk::all(); // Retrieve all products
-        return view('produk.index', compact('produk')); 
-    }
+   public function index(Request $request)
+{
+    $produk = Produk::all(); // Ambil semua data produk dari database
+
+    // Kirimkan data produk ke view
+    return view('produk.index', compact('produk')); 
+}
+
+
 
      public function create()
     {

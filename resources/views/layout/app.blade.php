@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Mirrored from demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/html/main/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 06 Jul 2023 01:54:29 GMT -->
-
 <head>
     <!--  Title -->
     <title>ArisanYUK!</title>
@@ -16,18 +14,31 @@
     <meta name="keywords" content="Mordenize" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!--  Favicon -->
-
     <link rel="shortcut icon" type="image/png"
         href="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/logos/favicon.ico" />
     <!-- Owl Carousel  -->
-    <link rel="stylesheet" href="{{asset('assets/dist/libs/owl.carousel/dist/assets/owl.carousel.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/dist/libs/owl.carousel/dist/assets/owl.carousel.min.css') }}">
+    <!-- Core Css -->
+    <link id="themeColors" rel="stylesheet" href="{{ asset('assets/dist/css/style.min.css') }}" />
+
+
+    
     
 
-    <!-- Core Css -->
-    <link id="themeColors" rel="stylesheet" href="{{asset('assets/dist/css/style.min.css')}}" />
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        /* Additional CSS for header */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
 
-
+        .content-wrapper {
+            margin-top: 70px;
+            /* Adjust based on your header height */
+        }
+    </style>
 </head>
 
 <body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-behavior="sticky">
@@ -37,11 +48,7 @@
         <img src="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/logos/favicon.ico"
             alt="loader" class="lds-ripple img-fluid" />
     </div>
-    <!-- Preloader -->
-    <div class="preloader">
-        <img src="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/logos/favicon.ico"
-            alt="loader" class="lds-ripple img-fluid" />
-    </div>
+
     <!--  Body Wrapper -->
     <div class="page-wrapper" id="main-wrapper" data-theme="blue_theme" data-layout="vertical" data-sidebartype="full"
         data-sidebar-position="fixed" data-header-position="fixed">
@@ -61,13 +68,8 @@
                     </div>
                 </div>
                 <!-- Sidebar navigation-->
-
                 @include('layout.sidebar')
-                {{-- <main class="py-4">--}}
-
-
-
-                    <!-- End Sidebar navigation -->
+                <!-- End Sidebar navigation -->
             </div>
             <!-- End Sidebar scroll-->
         </aside>
@@ -75,37 +77,30 @@
         <!--  Main wrapper -->
         <div class="body-wrapper">
             <!-- Header Start -->
-            @include('layout.header')
-
+            <header class="header">
+                @include('layout.header')
+            </header>
             <!-- Main Content -->
             <div class="content-wrapper">
                 @yield('content')
             </div>
-
         </div>
-
-
     </div>
 
-</body>
-
-
-<!--  Import Js Files -->
-@yield('script')
-<script src="{{asset('assets/dist/libs/jquery/dist/jquery.min.js')}}"></script>
-<script src="{{asset('assets/dist/libs/simplebar/dist/simplebar.min.js')}}"></script>
-<script src="{{asset('assets/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
-<!--  core files -->
-<script src="{{asset('assets/dist/js/app.min.js')}}"></script>
-<script src="{{asset('assets/dist/js/app.init.js')}}"></script>
-<script src="{{asset('assets/dist/js/app-style-switcher.js')}}"></script>
-<script src="{{asset('assets/dist/js/sidebarmenu.js')}}"></script>
-<script src="{{asset('assets/dist/js/custom.js')}}"></script>
-<!--  current page js files -->
-<script src="{{asset('assets/dist/libs/owl.carousel/dist/owl.carousel.min.js')}}"></script>
-
-{{-- <script src="assets/dist/libs/apexcharts/dist/apexcharts.min.js"></script>
-<script src="assets/dist/js/dashboard.js"></script> --}}
+    <!--  Import Js Files -->
+    @yield('script')
+    <script src="{{ asset('assets/dist/libs/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/dist/libs/simplebar/dist/simplebar.min.js') }}"></script>
+    <script src="{{ asset('assets/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+    <!--  core files -->
+    <script src="{{ asset('assets/dist/js/app.min.js') }}"></script>
+    <script src="{{ asset('assets/dist/js/app.init.js') }}"></script>
+    <script src="{{ asset('assets/dist/js/app-style-switcher.js') }}"></script>
+    <script src="{{ asset('assets/dist/js/sidebarmenu.js') }}"></script>
+    <script src="{{ asset('assets/dist/js/custom.js') }}"></script>
+    <!--  current page js files -->
+    <script src="{{ asset('assets/dist/libs/owl.carousel/dist/owl.carousel.min.js') }}"></script>
+  
 </body>
 
 </html>

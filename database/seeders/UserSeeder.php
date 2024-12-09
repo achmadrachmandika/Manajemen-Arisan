@@ -24,14 +24,14 @@ class UserSeeder extends Seeder
         $super_admin->assignRole('super_admin');
 
         $admin = User::create([
-            'name' => 'Admin',
+            'name' => 'Pegawai',
             'alamat' => 'Malang',
             'no_wa' => '00',
-            'email' => 'adminmeubel@gmail.com',
+            'email' => 'pegawaiadji@gmail.com',
             'password' => bcrypt('MeubelAdjie*'),
         ]);
 
-        $admin->assignRole('admin');
+        $admin->assignRole('pegawai');
 
          $peserta = User::create([
             'name' => 'peserta',
