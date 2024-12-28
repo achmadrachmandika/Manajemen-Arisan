@@ -113,7 +113,7 @@
 
 <head>
     <!--  Title -->
-    <title>Mordenize</title>
+    <title>Arisan Meubel Adji</title>
     <style>
         .form-bg {
         background-image: url('assets/assets/images/Login-Bg1.png');
@@ -121,13 +121,38 @@
         background-position: center; /* Center the background image */
         background-repeat: no-repeat; /* Prevent the background image from repeating */
         }
+        .preloader {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f7f7f7; /* Optional: Set a background color for the preloader */
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        z-index: 9999;
+        }
+        
+        .animated-loader {
+        animation: spin 2s linear infinite;
+        }
+        
+        @keyframes spin {
+        0% {
+        transform: rotate(0deg);
+        }
+        100% {
+        transform: rotate(360deg);
+        }
+        }
         </style>
     <!--  Required Meta Tag -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="handheldfriendly" content="true" />
     <meta name="MobileOptimized" content="width" />
-    <meta name="description" content="Mordenize" />
+    <meta name="description" content="Jadilah orang baik itu." />
     <meta name="author" content="" />
     <meta name="keywords" content="Mordenize" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -141,14 +166,10 @@
 <body>
     <!-- Preloader -->
     <div class="preloader">
-        <img src="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/logos/favicon.ico"
-            alt="loader" class="lds-ripple img-fluid" />
+        <img src="{{ asset('assets/assets/images/mebeladji1.jpg') }}" alt="loader"
+            class="lds-ripple img-fluid animated-loader" />
     </div>
     <!-- Preloader -->
-    <div class="preloader">
-        <img src="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/logos/favicon.ico"
-            alt="loader" class="lds-ripple img-fluid" />
-    </div>
     <!--  Body Wrapper -->
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-sidebartype="full" data-sidebar-position="fixed"
         data-header-position="fixed">
@@ -187,10 +208,10 @@
                                     </span>
                                     @enderror
                                 </div>
-                                    <button type="submit" class="btn btn-primary w-100 py-8 mb-4 rounded-2">Sign In</button>
+                                    <button type="submit" class="btn btn-primary w-100 py-8 mb-4 rounded-2">Masuk</button>
                                     <div class="d-flex align-items-center justify-content-center">
                                         <p class="fs-4 mb-0 fw-medium">Daftar untuk mengikuti Mebel Adji?</p>
-                                       <a class="text-white fw-medium ms-2" href="{{ route('register') }}">Buat Akun</a>
+                                       <a class="text-white fw-medium ms-2" href="{{ route('register.identity') }}">Buat Akun</a>
                                     </div>
                                 </form>
                             </div>

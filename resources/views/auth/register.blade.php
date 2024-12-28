@@ -138,6 +138,58 @@
                                     <input id="total-harga" type="text" class="form-control" value="0" readonly>
                                 </div>
 
+                             <div class="form-group mb-3">
+                                <div class="form-check">
+                                    <input type="checkbox" id="terms" name="terms" class="form-check-input">
+                                    <label for="terms" class="form-check-label">
+                                        Saya setuju dengan <a href="#termsSection" class="text-decoration-none text-primary">syarat dan
+                                            ketentuan</a> yang berlaku.
+                                    </label>
+                                </div>
+                                @error('terms')
+                                <span class="invalid-feedback d-block" role="alert">
+                                    <strong class="text-danger">{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                            
+                            <!-- Syarat dan Ketentuan -->
+                            <div id="termsSection" class="card shadow-sm mt-3" style="display:none;">
+                                <div class="card-header bg-light">
+                                    <h5 class="card-title mb-0">Syarat dan Ketentuan</h5>
+                                </div>
+                                <div class="card-body">
+                                    <p>1. Pembayaran harus rutin, apabila 10x berturut-turut tidak bayar, barang akan ditambah.</p>
+                                    <p>2. Barang yang sudah dipilih tidak boleh ditukar dengan barang lain kecuali stok barangnya kosong.</p>
+                                    <p>3. Pembagian sembako diberikan 2 minggu sebelum puasa hingga 2 minggu setelah puasa.</p>
+                                    <p>4. Daging sapi dibagikan pada malam tanggal 21 Ramadhan.</p>
+                                    <p>Dan syarat lainnya...</p>
+                                </div>
+                            </div>
+                            </div>
+
+                            <!-- Modal untuk syarat dan ketentuan -->
+                            <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="termsModalLabel">Syarat dan Ketentuan</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>1. Pembayaran harus rutin, apabila 10x berturut-turut tidak bayar, barang akan ditambah.</p>
+                                            <p>2. Barang yang sudah dipilih tidak boleh ditukar dengan barang lain kecuali stok barangnya kosong.
+                                            </p>
+                                            <p>3. Pembagian sembako diberikan 2 minggu sebelum puasa hingga 2 minggu setelah puasa.</p>
+                                            <p>4. Daging sapi dibagikan pada malam tanggal 21 Ramadhan.</p>
+                                            <p>Dan syarat lainnya...</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                                 <div class="text-center mt-4 d-flex justify-content-center align-items-center gap-3">
                                     <button type="submit" class="btn btn-lg btn-primary">Register</button>
                                     <a href="{{ url()->previous() }}" class="btn btn-lg btn-secondary">Kembali</a>
@@ -200,6 +252,23 @@
                                     const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
                                     passwordInput.setAttribute('type', type);
                                     this.classList.toggle('fa-eye-slash');
+                                });
+                            </script>
+                            <script>
+                                document.querySelector('form').addEventListener('submit', function (event) {
+                                    const termsCheckbox = document.getElementById('terms');
+                                    if (!termsCheckbox.checked) {
+                                        event.preventDefault(); // Mencegah form terkirim
+                                        alert('Anda harus menyetujui syarat dan ketentuan terlebih dahulu.');
+                                    }
+                                });
+                            </script>
+                            <script>
+                                // Menampilkan syarat dan ketentuan saat tautan diklik
+                                document.querySelector('a[href="#termsSection"]').addEventListener('click', function(event) {
+                                    event.preventDefault();
+                                    const termsSection = document.getElementById('termsSection');
+                                    termsSection.style.display = termsSection.style.display === 'none' ? 'block' : 'none';
                                 });
                             </script>
                         </div>

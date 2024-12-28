@@ -7,6 +7,7 @@ use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\PesertaController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\LaporanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +28,14 @@ Route::get('/', function () {
 // Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 // Route::get('register/produk', [RegisterController::class, 'showRegistrationForm'])->name('register_produk');
 
-Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+// Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+// routes/web.php
+Route::get('register/identity', [RegisterController::class, 'showIdentityForm'])->name('register.identity');
+Route::post('register/identity', [RegisterController::class, 'submitIdentity'])->name('register.identity.submit');
+
+Route::get('register/product', [RegisterController::class, 'showProductForm'])->name('register.product');
+Route::post('register/product', [RegisterController::class, 'submitProduct'])->name('register.product.submit');
+
 Route::get('approved', function () {
     return view('approved');
 })->name('approved');
@@ -53,6 +61,7 @@ Route::delete('admin/users/{id}/delete', [AdminUserController::class, 'delete'])
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::resource('produk', ProdukController::class);
         Route::resource('peserta', PesertaController::class);
+        Route::resource('laporan', LaporanController::class);
     });
 
     // For Peserta: Can access Arisan

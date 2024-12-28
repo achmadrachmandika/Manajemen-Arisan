@@ -2,15 +2,15 @@
 
 @section('content')
 <div class="container">
-    <h1>Persetujuan Anggota Arisan</h1>
+    <h1 class="mb-4">Persetujuan Anggota Arisan</h1>
 
     @foreach($users as $user)
     @if(!$user->is_approved)
     <div class="card mb-3">
         <div class="card-body">
             <h5 class="card-title">{{ $user->name }} ({{ $user->email }})</h5>
-            <h6>Alamat: {{ $user->alamat }}</h6>
-            <h6>Nomor WA: {{ $user->no_wa }}</h6>
+            <h6 class="card-subtitle mb-2 text-muted">Alamat: {{ $user->alamat }}</h6>
+            <h6 class="card-subtitle mb-2 text-muted">Nomor WA: {{ $user->no_wa }}</h6>
 
             <h6>Produk yang Dipilih:</h6>
             <ul>
@@ -26,21 +26,23 @@
                 Rp{{ number_format($user->produk->sum('harga'), 0, ',', '.') }}
             </p>
 
-            <form action="{{ route('admin.users.approve', $user->id) }}" method="POST"
+            <form action="{{ route('admin.users.approve', $user->id) }}" method="POST" class="d-inline"
                 onsubmit="return approveUser(event, '{{ $user->no_wa }}', '{{ $user->produk->pluck('nama')->implode(', ') }}')">
                 @csrf
-                <label for="role">Pilih Role:</label>
-                <select name="role" id="role">
-                    <option value="pegawai">Pegawai</option>
-                    <option value="peserta">Peserta</option>
-                </select>
-                <button type="submit">Approve</button>
+                <div class="form-group">
+                    <label for="role">Pilih Role:</label>
+                    <select name="role" id="role" class="form-control">
+                        <option value="pegawai">Pegawai</option>
+                        <option value="peserta">Peserta</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary mt-2">Approve</button>
             </form>
             <form action="{{ route('admin.users.delete', $user->id) }}" method="POST" id="delete-form-{{ $user->id }}"
-                style="display:inline-block;">
+                class="d-inline">
                 @csrf
                 @method('DELETE')
-                <button type="button" class="btn btn-danger btn-sm"
+                <button type="button" class="btn btn-danger mt-2"
                     onclick="confirmDelete({{ $user->id }})">Hapus</button>
             </form>
         </div>
@@ -61,7 +63,6 @@
             confirmButtonText: 'Ya, Hapus peserta ini!'
         }).then((result) => {
             if (result.isConfirmed) {
-                // Trigger the form submission after confirmation
                 document.getElementById('delete-form-' + userId).submit();
             }
         });
@@ -89,4 +90,12 @@
         });
     }
 </script>
+
+@push('scripts')
+<script>
+    $(document).ready(function() {
+        $('#zero_config').DataTable();
+    });
+</script>
+@endpush
 @endsection

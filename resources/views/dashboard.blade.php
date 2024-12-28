@@ -2,32 +2,38 @@
 
 @section('content')
 <main class="content">
-                <!--  Header End -->
-            <div class="container-fluid">
-                <h2>Total Produk</h2>
-                <div class="row">
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Total Produk</h5>
-                                <p class="card-text">{{ $produkCount }} Produk</p>
-                            </div>
+    <div class="container-fluid">
+        <!-- Total Produk -->
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card border-0 zoom-in bg-light-primary shadow-none">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <img src="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/svgs/icon-briefcase.svg"
+                                width="50" height="50" class="mb-3" alt="" />
+                            <p class="fw-semibold fs-3 text-primary mb-1">Total Produk</p>
+                            <h5 class="fw-semibold text-primary mb-0">{{ $produkCount }} Produk</h5>
                         </div>
                     </div>
                 </div>
-            
-               <h2>Total Peserta</h2>
-                <div class="row">
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Total Peserta</h5>
-                                <p class="card-text">{{ $pesertaCount }} Peserta</p>
-                            </div>
+            </div>
+
+            <!-- Total Peserta -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card border-0 zoom-in bg-light-warning shadow-none">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <img src="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/svgs/icon-user-male.svg"
+                                width="50" height="50" class="mb-3" alt="" />
+                            <p class="fw-semibold fs-3 text-warning mb-1">Total Peserta</p>
+                            <h5 class="fw-semibold text-warning mb-0">{{ $pesertaCount }} Peserta</h5>
                         </div>
                     </div>
                 </div>
-                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!--  Mobilenavbar -->
     <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="mobilenavbar"
@@ -300,6 +306,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> 
     </main>
 @endsection

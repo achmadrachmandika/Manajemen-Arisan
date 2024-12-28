@@ -21,54 +21,70 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
-    public function showRegistrationForm()
+    public function showIdentityForm()
     {
-        $produks = Produk::all();
-        return view('auth.register', compact('produks'));
+        return view('auth.register_identity');
     }
 
-    protected function validator(array $data)
+    public function submitIdentity(Request $request)
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:50'],
+        // Validasi data identitas
+        $request->validate([
+            'name' => ['required', 'string', 'max:50', 'unique:users'],
             'alamat' => ['required', 'string', 'max:100'],
             'no_wa' => ['required', 'string', 'max:25'],
             'email' => ['required', 'string', 'email', 'max:50', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'produk_id' => ['required', 'exists:produk,produk_id'],
         ]);
+
+        // Simpan data identitas di session untuk digunakan di langkah berikutnya
+        session([
+            'name' => $request->name,
+            'alamat' => $request->alamat,
+            'no_wa' => $request->no_wa,
+            'email' => $request->email,
+        ]);
+
+        return redirect()->route('register.product');
     }
 
-    protected function create(array $data)
+    public function showProductForm()
     {
-        // Simpan pengguna baru
-        $user = User::create([
-            'name' => $data['name'],
-            'alamat' => $data['alamat'],
-            'no_wa' => $data['no_wa'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'is_approved' => false, // Default user is not approved
-        ]);
-
-        // Jika ada produk yang dipilih, simpan ke pivot table user_produk
-        if (isset($data['produk_id'])) {
-            $user->produk()->attach($data['produk_id']);
-        }
-
-        return $user;
+        $produks = Produk::all(); // Ambil data produk
+        return view('auth.register_product', compact('produks'));
     }
 
-    protected function registered(Request $request, $user)
+    public function submitProduct(Request $request)
 {
-    // Check if the user is approved or still pending
-    if ($user->is_approved === true) {
-        // Redirect to the home page if the account is approved
-        return redirect($this->redirectTo)->with('status', 'Akun Anda telah terdaftar dan disetujui. Selamat datang!');
-    } else {
-        // Redirect to the 'approved' page if the account is not approved
-        return redirect()->route('approved')->with('status', 'Akun Anda telah terdaftar. Mohon menunggu konfirmasi dari admin.');
-    }
+    // Validasi produk yang dipilih, pastikan ada produk yang dipilih
+    $request->validate([
+        'produk_id' => ['required', 'array', 'min:1'],  // Min:1 memastikan setidaknya satu produk dipilih
+        'produk_id.*' => ['exists:produk,produk_id'],
+    ]);
+
+    // Ambil data identitas dari session
+    $identityData = session()->only(['name', 'alamat', 'no_wa', 'email']);
+
+    // Buat pengguna baru
+    $user = User::create([
+        'name' => $identityData['name'],
+        'alamat' => $identityData['alamat'],
+        'no_wa' => $identityData['no_wa'],
+        'email' => $identityData['email'],
+        'password' => Hash::make($request->password),
+        'is_approved' => false, // Default user is not approved
+        'terms' => 'accepted', // Menambahkan validasi untuk checkbox terms
+    ]);
+
+    // Simpan produk yang dipilih ke pivot table
+    $user->produk()->attach($request->produk_id);
+
+    // Menambahkan session untuk menampilkan modal sukses
+    session()->flash('register_success', true);
+
+    // Redirect ke halaman sukses atau login
+    return redirect()->route('login')->with('status', 'Pendaftaran berhasil. Silakan login.');
 }
 
 }
+
+

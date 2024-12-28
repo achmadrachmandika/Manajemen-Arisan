@@ -2,9 +2,9 @@
 <html lang="en">
 
 <head>
-    <!--  Title -->
+    <!-- Title -->
     <title>ArisanYUK!</title>
-    <!--  Required Meta Tag -->
+    <!-- Required Meta Tag -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="handheldfriendly" content="true" />
@@ -13,17 +13,15 @@
     <meta name="author" content="" />
     <meta name="keywords" content="Mordenize" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <!--  Favicon -->
+    <!-- Favicon -->
     <link rel="shortcut icon" type="image/png"
         href="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/logos/favicon.ico" />
-    <!-- Owl Carousel  -->
+    <!-- Owl Carousel -->
     <link rel="stylesheet" href="{{ asset('assets/dist/libs/owl.carousel/dist/assets/owl.carousel.min.css') }}">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <!-- Core Css -->
     <link id="themeColors" rel="stylesheet" href="{{ asset('assets/dist/css/style.min.css') }}" />
-
-
-    
-    
 
     <style>
         /* Additional CSS for header */
@@ -38,6 +36,44 @@
             margin-top: 70px;
             /* Adjust based on your header height */
         }
+
+        .preloader {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f7f7f7; /* Optional: Set a background color for the preloader */
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 9999;
+            }
+            
+            .animated-loader {
+            animation: spin 2s linear infinite;
+            }
+            
+            @keyframes spin {
+            0% {
+            transform: rotate(0deg);
+            }
+            100% {
+            transform: rotate(360deg);
+            }
+            }
+
+            .logo-text {
+            font-family: 'Poppins', sans-serif; /* Gunakan font Poppins atau font lain yang Anda pilih */
+            font-size: 30px; /* Ukuran font yang besar */
+            font-weight: 600; /* Menambah ketebalan font */
+            color: #333; /* Warna teks */
+            letter-spacing: 2px; /* Jarak antar huruf */
+            text-transform: uppercase; /* Membuat teks menjadi huruf kapital semua */
+            text-decoration: none; /* Menghapus garis bawah link */
+            display: inline-block;
+            }
+
     </style>
 </head>
 
@@ -45,11 +81,10 @@
 
     <!-- Preloader -->
     <div class="preloader">
-        <img src="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/logos/favicon.ico"
-            alt="loader" class="lds-ripple img-fluid" />
+        <img src="{{ asset('assets/assets/images/mebeladji1.jpg') }}" alt="loader"
+            class="lds-ripple img-fluid animated-loader" />
     </div>
-
-    <!--  Body Wrapper -->
+    <!-- Body Wrapper -->
     <div class="page-wrapper" id="main-wrapper" data-theme="blue_theme" data-layout="vertical" data-sidebartype="full"
         data-sidebar-position="fixed" data-header-position="fixed">
         <!-- Sidebar Start -->
@@ -58,10 +93,7 @@
             <div>
                 <div class="brand-logo d-flex align-items-center justify-content-between">
                     <a href="/dashboard" class="text-nowrap logo-img">
-                        <img src="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/logos/dark-logo.svg"
-                            class="dark-logo" width="180" alt="" />
-                        <img src="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/logos/light-logo.svg"
-                            class="light-logo" width="180" alt="" />
+                        <span class="logo-text">MeubelAdjie</span>
                     </a>
                     <div class="close-btn d-lg-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
                         <i class="ti ti-x fs-8 text-muted"></i>
@@ -73,8 +105,8 @@
             </div>
             <!-- End Sidebar scroll-->
         </aside>
-        <!--  Sidebar End -->
-        <!--  Main wrapper -->
+        <!-- Sidebar End -->
+        <!-- Main wrapper -->
         <div class="body-wrapper">
             <!-- Header Start -->
             <header class="header">
@@ -87,20 +119,22 @@
         </div>
     </div>
 
-    <!--  Import Js Files -->
-    @yield('script')
+    <!-- Import Js Files -->
     <script src="{{ asset('assets/dist/libs/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/dist/libs/simplebar/dist/simplebar.min.js') }}"></script>
     <script src="{{ asset('assets/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
-    <!--  core files -->
+    <!-- Core files -->
     <script src="{{ asset('assets/dist/js/app.min.js') }}"></script>
     <script src="{{ asset('assets/dist/js/app.init.js') }}"></script>
     <script src="{{ asset('assets/dist/js/app-style-switcher.js') }}"></script>
     <script src="{{ asset('assets/dist/js/sidebarmenu.js') }}"></script>
     <script src="{{ asset('assets/dist/js/custom.js') }}"></script>
-    <!--  current page js files -->
+    <!-- Owl Carousel JS -->
     <script src="{{ asset('assets/dist/libs/owl.carousel/dist/owl.carousel.min.js') }}"></script>
-  
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <!-- Page specific JS -->
+    @stack('scripts')
 </body>
 
 </html>
