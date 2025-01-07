@@ -26,7 +26,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Harga Per Iuran</label>
+                                <label class="form-label">Harga Total</label>
                                 <input type="number" name="harga" class="form-control" placeholder="Harga" required min="0" step="0.01">
                             </div>
 

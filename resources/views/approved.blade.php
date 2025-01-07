@@ -80,8 +80,7 @@
                     </p>
                 
                     <!-- Logout Button (Link) -->
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-inline">
-                        @csrf
+                    <form id="login-form" action="{{ route('login') }}" method="GET" class="d-inline">
                         <button type="submit" class="btn-custom">Kembali</button>
                     </form>
                 </div>

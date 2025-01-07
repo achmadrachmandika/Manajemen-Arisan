@@ -38,6 +38,7 @@
                 </div>
                 <button type="submit" class="btn btn-primary mt-2">Approve</button>
             </form>
+
             <form action="{{ route('admin.users.delete', $user->id) }}" method="POST" id="delete-form-{{ $user->id }}"
                 class="d-inline">
                 @csrf
@@ -52,6 +53,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
     function confirmDelete(userId) {
         Swal.fire({
@@ -68,11 +70,15 @@
         });
     }
 
-    function approveUser(event, phoneNumber, productName) {
-        event.preventDefault();
+    function approveUser(event, no_wa, productName) {
+        event.preventDefault(); // Mencegah form langsung submit
         var form = event.target;
-        var whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent('Selamat anda telah melakukan pembayaran pada ' + productName + ' dan anda dapat melakukan login dengan akun yang telah didaftarkan sebelumnya.')}`;
-        
+
+        // Pesan WhatsApp
+        var whatsappMessage = `Selamat, Anda telah melakukan pembayaran pada produk: ${productName}. Silakan login dengan akun yang telah didaftarkan.`;
+        var whatsappUrl = `https://wa.me/${no_wa}?text=${encodeURIComponent(whatsappMessage)}`;
+
+        // Konfirmasi dengan SweetAlert
         Swal.fire({
             title: 'Approve anggota ini?',
             icon: 'warning',
@@ -82,9 +88,9 @@
             confirmButtonText: 'Ya, Approve!'
         }).then((result) => {
             if (result.isConfirmed) {
-                form.submit();
+                form.submit(); // Submit form untuk persetujuan
                 setTimeout(function() {
-                    window.location.href = whatsappUrl;
+                    window.location.href = whatsappUrl; // Membuka WhatsApp di tab yang sama
                 }, 1000);
             }
         });
@@ -98,4 +104,5 @@
     });
 </script>
 @endpush
+
 @endsection

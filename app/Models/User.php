@@ -24,6 +24,7 @@ class User extends Authenticatable
         'no_wa',
         'email',
         'password',
+        'status_pembayaran',
     ];
 
     /**
@@ -51,6 +52,13 @@ public function produk()
 {
     return $this->belongsToMany(Produk::class, 'user_produk', 'user_id', 'produk_id');
 }
+
+  public function bagianPembayaran()
+    {
+        return $this->hasMany(BagianPembayaran::class);
+    }
+
+    
     public function role()
     {
         return $this->belongsTo(Role::class);

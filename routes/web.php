@@ -30,8 +30,8 @@ Route::get('/', function () {
 
 // Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 // routes/web.php
-Route::get('register/identity', [RegisterController::class, 'showIdentityForm'])->name('register.identity');
-Route::post('register/identity', [RegisterController::class, 'submitIdentity'])->name('register.identity.submit');
+Route::get('register/pendaftaran', [RegisterController::class, 'showIdentityForm'])->name('register.identity');
+Route::post('register/pendaftaran', [RegisterController::class, 'submitIdentity'])->name('register.identity.submit');
 
 Route::get('register/product', [RegisterController::class, 'showProductForm'])->name('register.product');
 Route::post('register/product', [RegisterController::class, 'submitProduct'])->name('register.product.submit');
@@ -55,6 +55,8 @@ Route::get('admin/users', [AdminUserController::class, 'index'])->name('admin.us
 Route::delete('admin/users/{id}/delete', [AdminUserController::class, 'delete'])->name('admin.users.delete');
   Route::get('admin/approved-users', [AdminUserController::class, 'approvedUsers'])->name('admin.users.approved');
     Route::post('admin/approved-users/{user}/approve', [AdminUserController::class, 'approve'])->name('admin.users.approve');
+    Route::post('/admin/update/payment/status', [AdminUserController::class, 'updatePaymentStatus'])->name('admin.update.payment.status');
+
 
 // Route to approve a user (this should be a POST request)
 

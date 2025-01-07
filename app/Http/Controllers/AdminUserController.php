@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use App\Models\UserProduk;
 
 class AdminUserController extends Controller
 {
@@ -70,4 +71,28 @@ class AdminUserController extends Controller
 
         return redirect()->route('admin.users.index')->with('success', 'User berhasil dihapus.');
     }
+
+public function updatePaymentStatus(Request $request)
+{
+    $request->validate([
+        'user_id' => 'required|exists:users,id',
+        'bagian' => 'required|integer|min:1|max:11',
+        'status' => 'required|in:terbayar,belum_terbayar',
+    ]);
+
+    // Update status pembayaran untuk bagian yang dipilih
+    $userProduk = UserProduk::where('user_id', $request->user_id)->first();  // Menyesuaikan query
+
+    if ($userProduk) {
+        $bagian = "status_bagian_" . $request->bagian;
+        $userProduk->$bagian = $request->status; // Mengubah status sesuai bagian yang dipilih
+        $userProduk->save();
+
+        // Mengembalikan response sukses
+        return redirect()->back()->with('success', 'Status pembayaran berhasil diperbarui.');
+    }
+
+    return redirect()->back()->with('error', 'Gagal memperbarui status.');
+}
+
 }

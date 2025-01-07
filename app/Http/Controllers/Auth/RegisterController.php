@@ -82,7 +82,7 @@ class RegisterController extends Controller
     session()->flash('register_success', true);
 
     // Redirect ke halaman sukses atau login
-    return redirect()->route('login')->with('status', 'Pendaftaran berhasil. Silakan login.');
+    return redirect()->route('approved')->with('status', 'Pendaftaran berhasil. Silakan login.');
 }
 
 }
