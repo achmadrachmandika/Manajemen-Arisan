@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('alamat');
-            $table->string('no_wa');
-            $table->string('email')->unique();
+            $table->string('name', 50);
+            $table->string('alamat', 50);
+            $table->string('no_wa', 25);
+            $table->string('email', 35)->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password', 100);
             $table->rememberToken();
             $table->boolean('is_approved')->default(false);  // Menandakan apakah pengguna sudah disetujui
             $table->timestamps();

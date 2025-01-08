@@ -159,7 +159,6 @@
     function showPaymentDetails(userName, produkName, statuses) {
     let content = `
     <p><strong>Nama Pengguna:</strong> ${userName}</p>
-    <p><strong>Produk:</strong> ${produkName}</p>
     <table class="table table-bordered">
         <thead>
             <tr>

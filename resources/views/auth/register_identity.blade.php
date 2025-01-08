@@ -94,7 +94,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="no_wa" class="form-label">Nomor WhatsApp</label>
+                        <label for="no_wa" class="form-label">Nomor WhatsApp <b>*Awali dengan 62</b></label>
                         <input type="text" class="form-control" id="no_wa" name="no_wa" required placeholder="Nomor WA">
                     </div>
 
@@ -118,7 +118,7 @@
                     <button type="submit" class="btn-next">Selanjutnya</button>
 
                     <div class="text-center mt-4">
-                        <p>Already have an account? <a href="{{ route('login') }}">Login</a></p>
+                        <p>Jika sudah memiliki akun silahkan login <a href="{{ route('login') }}">Login</a></p>
                     </div>
                 </form>
             </div>

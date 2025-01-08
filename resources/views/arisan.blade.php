@@ -115,7 +115,8 @@
                     <a href="#" class="h4 mb-3">{{ $item->nama }}</a>
                     <p class="mb-3">{{ $item->deskripsi }}</p>
                     <p class="mb-3">Rp. {{ number_format($item->harga, 0, ',', '.') }}</p>
-                    <a href="#" class="btn text-secondary">Lakukan Pembayaran <i class="fa fa-angle-right"></i></a>
+                    <a href="{{ route('detailiuranuser') }}" class="btn text-secondary">Lihat daftar iuran <i
+                            class="fa fa-angle-right"></i></a>
                 </div>
             </div>
             @endforeach
@@ -187,16 +188,6 @@
 </div> --}}
 <!-- About End -->
 
-<div class="container-fluid feature bg-light py-5">
-    <div class="container py-5">
-        <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
-            <h1 class="display-3 text-capitalize mb-3">Laporan Iuran {{ Auth::user()->name }}</h1>
-        </div>
-       <h1>Riwayat Pembayaran</h1>
-    </div>
-</div>
-
-
 <!-- Fact Counter -->
 {{-- <div class="container-fluid counter py-5">
     <div class="container py-5">
@@ -267,27 +258,30 @@
             <h1 class="display-3 text-capitalize mb-3"></h1>
         </div>
         <div class="row g-4 justify-content-center">
-    @foreach($produk as $item)
-    <div class="col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="{{ $loop->iteration * 0.2 }}s">
-        <div class="product-item">
-            @if($item->photo) <!-- Jika produk memiliki gambar -->
-            <img src="{{ Storage::url($item->photo) }}" class="img-fluid w-100 rounded-top" alt="{{ $item->nama }}">
-            @else
-            <img src="assets/assets/img/default-product.png" class="img-fluid w-100 rounded-top" alt="Image"> <!-- Gambar default jika tidak ada -->
-            @endif
-            <div class="product-content bg-light text-center rounded-bottom p-4">
-                <p>{{ $item->quantity }} {{ $item->unit }}</p>
-                <a href="#" class="h4 d-inline-block mb-3">{{ $item->nama }}</a>
-                <p class="fs-4 text-primary mb-3">Rp. {{ number_format($item->harga, 0, ',', '.') }}</p>
-                <a href="#" class="btn btn-secondary rounded-pill py-2 px-4">Read More</a>
+            @foreach($produk as $item)
+            <div class="col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="{{ $loop->iteration * 0.2 }}s">
+                <div class="product-item">
+                    @if($item->photo)
+                    <img src="{{ Storage::url($item->photo) }}" class="img-fluid w-100 rounded-top"
+                        alt="{{ $item->nama }}">
+                    @else
+                    <img src="assets/assets/img/default-product.png" class="img-fluid w-100 rounded-top" alt="Image">
+                    @endif
+                    <div class="product-content bg-light text-center rounded-bottom p-4">
+                  
+                        <a href="#" class="h4 d-inline-block mb-3">{{ $item->nama }}</a>
+                        <p class="fs-4 text-primary mb-3">Rp. {{ number_format($item->harga, 0, ',', '.') }}</p>
+                        <p>{{ $item ->deskripsi }}</p>
+                        <!-- Trigger modal button -->
+                    </div>
+                </div>
             </div>
+            @endforeach
         </div>
     </div>
-    @endforeach
 </div>
 
-    </div>
-</div>
+
 <!-- Products End -->
 
 
@@ -296,5 +290,6 @@
 
 
 <!-- Team End -->
+
 
 @endsection

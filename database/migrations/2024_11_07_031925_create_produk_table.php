@@ -14,7 +14,7 @@ return new class extends Migration
     Schema::create('produk', function (Blueprint $table) {
         $table->bigIncrements('produk_id'); // Primary key yang auto-increment
         $table->string('nama', 50);
-        $table->string('deskripsi');
+        $table->string('deskripsi', 150);
         $table->bigInteger('harga'); // Tidak perlu auto_increment
         $table->enum('kategori', ['Sembako', 'Minuman', 'Kue/Jajan', 'Paket Kue', 'Paket Snack', 'Tabungan dan Mebel']);
         $table->text('photo');

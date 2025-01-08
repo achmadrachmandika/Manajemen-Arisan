@@ -78,6 +78,8 @@ Route::get('/print-transaksi/{userId}', [IuranController::class, 'printTransaksi
     // For Peserta: Can access Arisan
     Route::middleware(['role:peserta'])->group(function () {
         Route::get('/arisan', [ArisanController::class, 'index'])->name('arisan');
+        // Definisikan rute untuk melihat detail iuran
+Route::get('/detailiuranuser', [ArisanController::class, 'show'])->name('detailiuranuser');
     });
 });
 // Auth routes (login, registration, etc.)
