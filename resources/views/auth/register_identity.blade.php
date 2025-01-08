@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - Identity</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Updated Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         .register-card {
             background: white;
@@ -40,12 +39,23 @@
             font-size: 36px;
             font-weight: bold;
             color: #ff6347;
-            /* Warna solid, misalnya tomat */
         }
 
         .text-center p {
             font-size: 18px;
             color: #888;
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .eye-icon {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
         }
     </style>
 </head>
@@ -93,12 +103,17 @@
                         <input type="email" class="form-control" id="email" name="email" required placeholder="Email">
                     </div>
 
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Masukkan Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required placeholder="Password">
-                    </div>
-
-                    
+                  <div class="mb-3 password-container">
+                    <label for="password" class="form-label">Masukkan Password</label>
+                    <input type="password" class="form-control" id="password" name="password" required placeholder="Password">
+                    <i class="fas fa-eye eye-icon" id="toggle-password" style="cursor: pointer;"></i>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
+                    <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required
+                        placeholder="Konfirmasi Password">
+                </div>
 
                     <button type="submit" class="btn-next">Selanjutnya</button>
 
@@ -111,6 +126,23 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Select the password fields and toggle icon
+        const togglePassword = document.getElementById('toggle-password');
+        const passwordField = document.getElementById('password');
+        const passwordConfirmationField = document.getElementById('password_confirmation');
+    
+        // Add event listener to toggle the password visibility
+        togglePassword.addEventListener('click', function () {
+            // Toggle password visibility
+            const type = passwordField.type === 'password' ? 'text' : 'password';
+            passwordField.type = type;
+            passwordConfirmationField.type = type;
+    
+            // Toggle the eye icon
+            this.classList.toggle('fa-eye-slash');
+        });
+    </script>
 </body>
 
 </html>

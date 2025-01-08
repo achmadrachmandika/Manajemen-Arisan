@@ -6,7 +6,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\PesertaController;
 use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\IuranController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\LaporanController;
 
 /*
@@ -56,6 +58,13 @@ Route::delete('admin/users/{id}/delete', [AdminUserController::class, 'delete'])
   Route::get('admin/approved-users', [AdminUserController::class, 'approvedUsers'])->name('admin.users.approved');
     Route::post('admin/approved-users/{user}/approve', [AdminUserController::class, 'approve'])->name('admin.users.approve');
     Route::post('/admin/update/payment/status', [AdminUserController::class, 'updatePaymentStatus'])->name('admin.update.payment.status');
+  Route::get('/get-payment-details', [AdminUserController::class, 'getPaymentDetails']);
+
+Route::get('/print-transaksi/{userId}', [IuranController::class, 'printTransaksi'])->name('print.transaksi');
+
+
+
+
 
 
 // Route to approve a user (this should be a POST request)

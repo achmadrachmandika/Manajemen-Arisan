@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Models\UserProduk;
+use App\Models\Produk;
 
 class AdminUserController extends Controller
 {
@@ -80,19 +81,34 @@ public function updatePaymentStatus(Request $request)
         'status' => 'required|in:terbayar,belum_terbayar',
     ]);
 
-    // Update status pembayaran untuk bagian yang dipilih
-    $userProduk = UserProduk::where('user_id', $request->user_id)->first();  // Menyesuaikan query
+    // Ambil semua user_produk milik user
+    $userProduks = UserProduk::where('user_id', $request->user_id)->get();
 
-    if ($userProduk) {
-        $bagian = "status_bagian_" . $request->bagian;
-        $userProduk->$bagian = $request->status; // Mengubah status sesuai bagian yang dipilih
-        $userProduk->save();
-
-        // Mengembalikan response sukses
-        return redirect()->back()->with('success', 'Status pembayaran berhasil diperbarui.');
+    if ($userProduks->isEmpty()) {
+        return redirect()->back()->with('error', 'Produk tidak ditemukan untuk user ini.');
     }
 
-    return redirect()->back()->with('error', 'Gagal memperbarui status.');
+    // Hitung total harga produk
+    $totalHarga = $userProduks->map(function ($userProduk) {
+        return $userProduk->produk->harga ?? 0; // Pastikan harga produk tersedia
+    })->sum();
+
+    // Harga per bagian (total dibagi 11 bagian)
+    $hargaPerBagian = $totalHarga / 11;
+
+    // Update status pembayaran untuk setiap produk
+    foreach ($userProduks as $userProduk) {
+        $bagian = "status_bagian_" . $request->bagian;
+        $userProduk->$bagian = $request->status;
+
+        // Simpan perubahan
+        $userProduk->save();
+    }
+
+    return redirect()->back()->with('success', "Status pembayaran berhasil diperbarui. Harga per bagian: Rp" . number_format($hargaPerBagian, 2, ',', '.'));
 }
+
+
+
 
 }

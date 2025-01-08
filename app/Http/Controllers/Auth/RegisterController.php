@@ -14,77 +14,86 @@ class RegisterController extends Controller
 {
     use RegistersUsers;
 
-    protected $redirectTo = '/login'; // Mengarahkan ke halaman login
+    protected $redirectTo = '/login'; // Redirect to login page after registration
 
     public function __construct()
     {
         $this->middleware('guest');
     }
 
+    // Show identity registration form
     public function showIdentityForm()
     {
         return view('auth.register_identity');
     }
 
+    // Handle identity submission
     public function submitIdentity(Request $request)
     {
-        // Validasi data identitas
+        // Validate the identity data
         $request->validate([
             'name' => ['required', 'string', 'max:50', 'unique:users'],
             'alamat' => ['required', 'string', 'max:100'],
             'no_wa' => ['required', 'string', 'max:25'],
             'email' => ['required', 'string', 'email', 'max:50', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
-        // Simpan data identitas di session untuk digunakan di langkah berikutnya
+        // Store identity data in session
         session([
             'name' => $request->name,
             'alamat' => $request->alamat,
             'no_wa' => $request->no_wa,
             'email' => $request->email,
+            'password' => $request->password,
         ]);
 
         return redirect()->route('register.product');
     }
 
+    // Show product selection form
     public function showProductForm()
     {
-        $produks = Produk::all(); // Ambil data produk
+        $produks = Produk::all(); // Retrieve all products
         return view('auth.register_product', compact('produks'));
     }
 
+    // Handle product selection and complete registration
     public function submitProduct(Request $request)
-{
-    // Validasi produk yang dipilih, pastikan ada produk yang dipilih
-    $request->validate([
-        'produk_id' => ['required', 'array', 'min:1'],  // Min:1 memastikan setidaknya satu produk dipilih
-        'produk_id.*' => ['exists:produk,produk_id'],
-    ]);
+    {
+        // Validate product selection, at least one product must be selected
+        $request->validate([
+            'produk_id' => ['required', 'array', 'min:1'],
+            'produk_id.*' => ['exists:produk,produk_id'],
+            'terms' => ['required', 'accepted'],
+        ]);
 
-    // Ambil data identitas dari session
-    $identityData = session()->only(['name', 'alamat', 'no_wa', 'email']);
+        // Retrieve identity data from session
+        $identityData = session()->only(['name', 'alamat', 'no_wa', 'email']);
+        // Retrieve password from session
+        $password = session('password');
 
-    // Buat pengguna baru
-    $user = User::create([
-        'name' => $identityData['name'],
-        'alamat' => $identityData['alamat'],
-        'no_wa' => $identityData['no_wa'],
-        'email' => $identityData['email'],
-        'password' => Hash::make($request->password),
-        'is_approved' => false, // Default user is not approved
-        'terms' => 'accepted', // Menambahkan validasi untuk checkbox terms
-    ]);
+        // Create a new user with the identity data and hashed password
+        $user = User::create([
+            'name' => $identityData['name'],
+            'alamat' => $identityData['alamat'],
+            'no_wa' => $identityData['no_wa'],
+            'email' => $identityData['email'],
+            'password' => Hash::make($password), // Store the hashed password
+            'is_approved' => false, // Default to not approved
+            'terms' => 'accepted', // Terms acceptance
+        ]);
 
-    // Simpan produk yang dipilih ke pivot table
-    $user->produk()->attach($request->produk_id);
+        // Attach selected products to the user (many-to-many relation with produk)
+        $user->produk()->attach($request->produk_id);
 
-    // Menambahkan session untuk menampilkan modal sukses
-    session()->flash('register_success', true);
+        // Clear session data after successful registration
+        session()->flush();
 
-    // Redirect ke halaman sukses atau login
-    return redirect()->route('approved')->with('status', 'Pendaftaran berhasil. Silakan login.');
+        // Flash a success message to the session
+        session()->flash('status', 'Pendaftaran berhasil. Silakan login.');
+
+        // Redirect to the login page
+          return redirect()->route('approved')->with('status', 'Pendaftaran berhasil. Silakan login.');
+    }
 }
-
-}
-
-

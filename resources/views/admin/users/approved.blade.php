@@ -25,6 +25,7 @@
                                         <th>Harga per Bagian</th>
                                         <th>Status Pembayaran</th>
                                         <th>Aksi</th>
+                                        <th>Cetak</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -39,38 +40,47 @@
                                             <span class="badge bg-info">{{ $produk->nama }}</span><br>
                                             @endforeach
                                         </td>
-                                        <td class="text-wrap">
-                                            @foreach($user->produk as $produk)
-                                            <p>{{ $produk->deskripsi }}</p>
-                                            @endforeach
-                                        </td>
+                                      <td class="text-wrap">
+                                        @if($user->produk->isNotEmpty())
+                                        <p>{{ $user->produk->first()->deskripsi }}</p>
+                                        @endif
+                                    </td>
                                         <td class="wrap-content">
                                             @foreach($user->produk as $produk)
                                             <span class="badge bg-success">Rp. {{ number_format($produk->harga, 0, ',',
-                                                '.') }}/ Minggu</span><br>
+                                                '.') }}</span><br>
                                             @endforeach
                                         </td>
-                                        <td class="wrap-content">
-                                            @foreach($user->produk as $produk)
-                                            <span class="badge bg-info">
-                                                Rp. {{ number_format($produk->harga / 11, 0, ',', '.') }}
-                                            </span><br>
-                                            @endforeach
-                                        </td>
-                                        <td class="wrap-content">
-                                            @foreach($user->produk as $produk)
-                                            @for ($i = 1; $i <= 11; $i++) <span class="badge bg-{{ $produk->{" status_bagian_$i"}=='terbayar' ? 'success'
-                                                : 'danger' }}">
-                                                Bagian {{ $i }}: {{ ucfirst($produk->{"status_bagian_$i"}) }}
-                                                </span><br>
-                                                @endfor
-                                                @endforeach
-                                        </td>
+                                       <td class="wrap-content">
+                                        @php
+                                        $totalIuran = $user->produk->sum('harga') / 11;
+                                        @endphp
+                                        @foreach($user->produk as $produk)
+                                        <span class="badge bg-info">
+                                            Rp. {{ number_format($produk->harga / 11, 0, ',', '.') }}
+                                        </span><br>
+                                        @endforeach
+                                        <br><strong>Total Iuran:</strong> Rp. {{ number_format($totalIuran, 0, ',', '.') }}
+                                    <td class="wrap-content">
+                                        @php
+                                        $produk = $user->produk->first(); // Ambil produk pertama dari daftar produk
+                                        $statuses = $produk->pivot; // Menyimpan status pembayaran untuk produk pertama
+                                        @endphp
+                                        <button class="btn btn-info btn-sm"
+                                            onclick="showPaymentDetails('{{ $user->name }}', '{{ $produk->nama }}', {{ json_encode($statuses) }})">
+                                            Detail Pembayaran
+                                        </button>
+                                    </td>
                                         <td class="wrap-content">
                                             <button class="btn btn-primary btn-sm"
                                                 onclick="showPaymentModal({{ $user->id }}, '{{ $user->name }}')">
                                                 Update Status
                                             </button>
+                                        </td>
+                                        <td class="wrap-content">
+                                            <a href="{{ route('print.transaksi', ['userId' => $user->id]) }}" class="btn btn-warning btn-sm">
+                                                Cetak
+                                            </a>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -85,6 +95,23 @@
 </main>
 
 <!-- Modal untuk Pembaruan Status -->
+<!-- Modal untuk Detail Status Pembayaran -->
+<div class="modal fade" id="paymentDetailsModal" tabindex="-1" aria-labelledby="paymentDetailsModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="paymentDetailsModalLabel">Detail Status Pembayaran</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="paymentDetailsBody">
+                <!-- Detail status pembayaran akan dimasukkan di sini melalui JavaScript -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal untuk Pembaruan Status -->
 <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -97,9 +124,9 @@
                     @csrf
                     <input type="hidden" id="userId" name="user_id">
                     <div class="mb-3">
-                        <label for="bagian" class="form-label">Pilih Bagian</label>
+                        <label for="bagian" class="form-label">Pilih Iuran ke berapa</label>
                         <select id="bagian" name="bagian" class="form-select">
-                            @for ($i = 1; $i <= 11; $i++) <option value="{{ $i }}">Bagian {{ $i }}</option>
+                            @for ($i = 1; $i <= 11; $i++) <option value="{{ $i }}">Iuran {{ $i }}</option>
                                 @endfor
                         </select>
                     </div>
@@ -129,6 +156,38 @@
         });
     });
 
+    function showPaymentDetails(userName, produkName, statuses) {
+    let content = `
+    <p><strong>Nama Pengguna:</strong> ${userName}</p>
+    <p><strong>Produk:</strong> ${produkName}</p>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Iuran</th>
+                <th>Status Pembayaran</th>
+            </tr>
+        </thead>
+        <tbody>
+            `;
+    
+            // Iterasi status pembayaran dan tampilkan seluruh bagian
+            for (let i = 1; i <= 11; i++) { let status=statuses[`status_bagian_${i}`] ? statuses[`status_bagian_${i}`]
+                : 'Belum Terbayar' ; let statusColor=(status==='terbayar' ) ? 'success' : 'danger' ; content +=` <tr>
+                <td>Iuran ${i}</td>
+                <td><span class="badge bg-${statusColor}">${status.charAt(0).toUpperCase() + status.slice(1)}</span></td>
+                </tr>
+                `;
+                }
+    
+                content += `</tbody>
+    </table>`;
+    
+    // Menampilkan konten di modal
+    document.getElementById('paymentDetailsBody').innerHTML = content;
+    // Menampilkan modal
+    $('#paymentDetailsModal').modal('show');
+    }
+
     function showPaymentModal(userId, userName) {
         // Set the userId in the hidden input field
         document.getElementById('userId').value = userId;
@@ -137,11 +196,27 @@
         // Show the modal
         $('#paymentModal').modal('show');
     }
+
+    
+
+    
+
+    
 </script>
 @endpush
 
 <style>
     .text-wrap {
         white-space: normal !important;
+    }
+
+    .badge.bg-success {
+        background-color: #28a745 !important;
+        /* Green for terbayar */
+    }
+
+    .badge.bg-danger {
+        background-color: #dc3545 !important;
+        /* Red for belum_terbayar */
     }
 </style>
