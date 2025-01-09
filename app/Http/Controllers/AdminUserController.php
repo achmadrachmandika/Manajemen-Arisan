@@ -34,7 +34,7 @@ class AdminUserController extends Controller
     $user->is_approved = true;
 
     // Validasi dan assign role hanya ke 'admin' atau 'peserta'
-    if ($request->has('role') && in_array($request->input('role'), ['admin', 'peserta'])) {
+    if ($request->has('role') && in_array($request->input('role'), ['pegawai', 'peserta'])) {
         $roleName = $request->input('role');
         if (Role::where('name', $roleName)->exists()) {
             $role = Role::findByName($roleName);

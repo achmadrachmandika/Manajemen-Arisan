@@ -32,4 +32,6 @@ class UserProduk extends Model
     {
         return $this->hasMany(Iuran::class, 'user_produk');
     }
+
+    
 }

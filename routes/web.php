@@ -10,6 +10,7 @@ use App\Http\Controllers\IuranController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\JadwalPegawaiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,6 +82,11 @@ Route::get('/print-transaksi/{userId}', [IuranController::class, 'printTransaksi
         // Definisikan rute untuk melihat detail iuran
 Route::get('/detailiuranuser', [ArisanController::class, 'show'])->name('detailiuranuser');
     });
+
+  Route::middleware(['role:pegawai'])->group(function () {
+    Route::get('/jadwalpegawai', [JadwalPegawaiController::class, 'index'])->name('jadwalpegawai');
+});
+
 });
 // Auth routes (login, registration, etc.)
 Auth::routes();
