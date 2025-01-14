@@ -19,7 +19,7 @@
             </div>
 
             <!-- Total Peserta -->
-            <div class="col-lg-4 col-md-6 mb-4">
+            {{-- <div class="col-lg-4 col-md-6 mb-4">
                 <div class="card border-0 zoom-in bg-light-warning shadow-none">
                     <div class="card-body">
                         <div class="text-center">
@@ -30,7 +30,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 

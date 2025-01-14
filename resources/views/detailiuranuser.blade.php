@@ -18,6 +18,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
+    <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="assets/assets/lib/animate/animate.min.css" rel="stylesheet">
     <link href="assets/assets/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
@@ -48,17 +49,6 @@
             color: #333;
         }
 
-        .card {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-        }
-
         .table th {
             background-color: #007bff;
             color: white;
@@ -68,85 +58,11 @@
             background-color: white;
             border-color: #ddd;
         }
-
-        .badge {
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-
-        .badge.bg-success {
-            background-color: #28a745;
-        }
-
-        .badge.bg-danger {
-            background-color: #dc3545;
-        }
-
-        .modal-content {
-            border-radius: 10px;
-        }
-
-        .modal-header {
-            background-color: #007bff;
-            color: white;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-        }
-
-        .modal-footer button {
-            background-color: #28a745;
-            color: white;
-        }
-
-        .product-item img {
-            border-radius: 10px;
-            transition: all 0.3s ease;
-        }
-
-        .product-item img:hover {
-            transform: scale(1.05);
-        }
-
-        .product-content {
-            padding: 20px;
-            background: linear-gradient(135deg, #6e7fcb, #5575f5);
-            color: white;
-            border-radius: 0 0 10px 10px;
-            text-align: center;
-        }
-
-        .product-content a {
-            color: white;
-            text-decoration: none;
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        .product-content .fs-4 {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-        }
-
-        .product-content .btn {
-            background-color: #ffba00;
-            color: #333;
-            border-radius: 20px;
-            font-size: 1.2rem;
-            padding: 10px 20px;
-        }
-
-        .product-content .btn:hover {
-            background-color: #f79c42;
-        }
     </style>
 
 </head>
 
 <body>
-
     <!-- Header Start -->
     <div class="container-fluid position-relative p-0">
         @include('layouts2.header')
@@ -170,20 +86,20 @@
         <!-- Produk yang Diikuti -->
         <h4>Produk yang Diikuti</h4>
         <div class="table-responsive">
-            <table class="table table-bordered">
+            <table id="zero_config" class="table border table-striped table-bordered text-nowrap">
                 <thead>
                     <tr>
-                        <th style="text-align: center">Produk</th>
-                         <th style="text-align: center">Harga</th>
-                         <th style="text-align: center">Status Pembayaran</th>
+                        <th>Produk</th>
+                        <th>Harga</th>
+                        <th>Status Pembayaran</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($user->produk as $produk)
                     <tr>
-                        <td style="text-align: center"><b>{{ $produk->nama }}</b></td>
-                        <td style="text-align: center">Rp. {{ number_format($produk->harga, 0, ',', '.') }}</td>
-                        <td style="text-align: center">
+                        <td>{{ $produk->nama }}</td>
+                        <td>Rp. {{ number_format($produk->harga, 0, ',', '.') }}</td>
+                        <td>
                             @foreach(range(1, 11) as $i)
                             @php
                             $status = $produk->pivot['status_bagian_' . $i];
@@ -214,6 +130,7 @@
     <!-- JavaScript Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="assets/assets/lib/wow/wow.min.js"></script>
     <script src="assets/assets/lib/easing/easing.min.js"></script>
     <script src="assets/assets/lib/waypoints/waypoints.min.js"></script>
@@ -222,6 +139,16 @@
 
     <!-- Template Javascript -->
     <script src="assets/assets/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#zero_config').DataTable({
+                "paging": true,
+                "ordering": true,
+                "info": true
+            });
+        });
+    </script>
 </body>
 
 </html>

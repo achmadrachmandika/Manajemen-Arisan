@@ -57,7 +57,7 @@
                                         $totalIuran = $user->produk->sum('harga') / 11;
                                         @endphp
                                         @foreach($user->produk as $produk)
-                                        <span class="badge bg-info">
+                                        <span class="badge bg-warning">
                                             Rp. {{ number_format($produk->harga / 11, 0, ',', '.') }}
                                         </span><br>
                                         @endforeach

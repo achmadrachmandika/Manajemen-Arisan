@@ -162,7 +162,7 @@
     <!-- Peserta dan Produk yang Diikuti -->
     <h4>Peserta dan Produk yang Diikuti</h4>
    <div class="table-responsive">
-    <table class="table table-bordered">
+            <table id="zero_config" class="table border table-striped table-bordered text-nowrap">
         <thead>
             <tr>
                 <th style="text-align: center">Nama Peserta</th>
@@ -191,7 +191,7 @@
 
 <!-- Tabel Produk Summary -->
 <div class="table-responsive">
-    <table class="table table-bordered">
+    <table id="zero_config1" class="table border table-striped table-bordered text-nowrap">
         <thead>
             <tr>
                 <th style="text-align: center">Nama Produk</th>
@@ -215,16 +215,38 @@
     <!-- Footer End -->
 
     <!-- JavaScript Libraries -->
+   <!-- JavaScript Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="assets/assets/lib/wow/wow.min.js"></script>
     <script src="assets/assets/lib/easing/easing.min.js"></script>
     <script src="assets/assets/lib/waypoints/waypoints.min.js"></script>
     <script src="assets/assets/lib/counterup/counterup.min.js"></script>
     <script src="assets/assets/lib/owlcarousel/owl.carousel.min.js"></script>
-
+    
     <!-- Template Javascript -->
     <script src="assets/assets/js/main.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+                $('#zero_config').DataTable({
+                    "paging": true,
+                    "ordering": true,
+                    "info": true
+                });
+            });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+                    $('#zero_config1').DataTable({
+                        "paging": true,
+                        "ordering": true,
+                        "info": true
+                    });
+                });
+    </script>
 </body>
 
 </html>
