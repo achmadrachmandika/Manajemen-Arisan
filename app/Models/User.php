@@ -52,6 +52,7 @@ public function produk()
 {
     return $this->belongsToMany(Produk::class, 'user_produk', 'user_id', 'produk_id')
                 ->withPivot([
+                     'quantity',
                     'status_bagian_1', 'status_bagian_2', 'status_bagian_3',
                     'status_bagian_4', 'status_bagian_5', 'status_bagian_6',
                     'status_bagian_7', 'status_bagian_8', 'status_bagian_9',
@@ -70,5 +71,6 @@ public function produk()
     {
         return $this->belongsTo(Role::class);
     }
+    
 
 }

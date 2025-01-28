@@ -11,19 +11,7 @@ class UserProduk extends Model
      protected $table = 'user_produk';  // Sesuaikan dengan nama tabel yang ada di database
 
     protected $fillable = [
-    'user_id', 
-    'produk_id', 
-    'status_bagian_1', 
-    'status_bagian_2', 
-    'status_bagian_3', 
-    'status_bagian_4', 
-    'status_bagian_5', 
-    'status_bagian_6', 
-    'status_bagian_7', 
-    'status_bagian_8', 
-    'status_bagian_9', 
-    'status_bagian_10', 
-    'status_bagian_11'
+    'user_id', 'produk_id', 'quantity', 'jumlah_bagian', 
 ];
 
 

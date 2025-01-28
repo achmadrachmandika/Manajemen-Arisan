@@ -14,7 +14,7 @@ class Iuran extends Model
     protected $table = 'iuran'; 
 
     // Define the fillable columns to prevent mass assignment vulnerabilities
-    protected $fillable = ['user_id', 'produk_id', 'is_paid'];
+    protected $fillable = [     'bagian_ke', 'jumlah_iuran', 'is_paid', 'user_produk_id'];
 
     /**
      * Define the relationship between Iuran and User

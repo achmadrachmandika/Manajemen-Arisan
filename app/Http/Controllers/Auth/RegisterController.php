@@ -59,41 +59,70 @@ class RegisterController extends Controller
     }
 
     // Handle product selection and complete registration
-    public function submitProduct(Request $request)
-    {
-        // Validate product selection, at least one product must be selected
-        $request->validate([
-            'produk_id' => ['required', 'array', 'min:1'],
-            'produk_id.*' => ['exists:produk,produk_id'],
-            'terms' => ['required', 'accepted'],
-        ]);
+  public function submitProduct(Request $request)
+{
+    // Validasi produk dan quantity
+    $request->validate([
+        'produk_id' => ['required', 'array', 'min:1'],
+        'produk_id.*' => ['exists:produk,produk_id'], // Pastikan produk_id yang ada adalah valid
+        'quantity' => ['required', 'array', 'min:1'],
+        'quantity.*' => ['integer', 'min:1'], // Pastikan quantity valid
+        'terms' => ['required', 'accepted'],
+    ]);
 
-        // Retrieve identity data from session
-        $identityData = session()->only(['name', 'alamat', 'no_wa', 'email']);
-        // Retrieve password from session
-        $password = session('password');
+    // Retrieve identity data from session
+    $identityData = session()->only(['name', 'alamat', 'no_wa', 'email']);
+    // Retrieve password from session
+    $password = session('password');
 
-        // Create a new user with the identity data and hashed password
-        $user = User::create([
-            'name' => $identityData['name'],
-            'alamat' => $identityData['alamat'],
-            'no_wa' => $identityData['no_wa'],
-            'email' => $identityData['email'],
-            'password' => Hash::make($password), // Store the hashed password
-            'is_approved' => false, // Default to not approved
-            'terms' => 'accepted', // Terms acceptance
-        ]);
+    // Create a new user with the identity data and hashed password
+    $user = User::create([
+        'name' => $identityData['name'],
+        'alamat' => $identityData['alamat'],
+        'no_wa' => $identityData['no_wa'],
+        'email' => $identityData['email'],
+        'password' => Hash::make($password), // Store the hashed password
+        'is_approved' => false, // Default to not approved
+        'terms' => 'accepted', // Terms acceptance
+    ]);
 
-        // Attach selected products to the user (many-to-many relation with produk)
-        $user->produk()->attach($request->produk_id);
+    $totalHarga = 0; // Variable untuk menyimpan total harga
 
-        // Clear session data after successful registration
-        session()->flush();
+    // Proses penyimpanan produk dengan quantity
+    foreach ($request->produk_id as $produkId) {
+        // Ambil quantity untuk produk tersebut
+        $quantity = $request->quantity[$produkId] ?? 1; // Dapatkan quantity berdasarkan produk_id
 
-        // Flash a success message to the session
-        session()->flash('status', 'Pendaftaran berhasil. Silakan login.');
+        // Pastikan quantity lebih dari 0 sebelum menyimpannya
+        if ($quantity > 0) {
+            $produk = Produk::find($produkId);
+            $harga = $produk->harga;
+            $totalHargaPerProduk = $harga * $quantity;
 
-        // Redirect to the login page
-          return redirect()->route('approved')->with('status', 'Pendaftaran berhasil. Silakan login.');
+            // Tambahkan produk ke pengguna (many-to-many relation) dengan quantity
+            $user->produk()->attach($produkId, [
+                'quantity' => $quantity,
+                'total_harga' => $totalHargaPerProduk // Menyimpan total harga per produk
+            ]);
+
+            // Tambahkan total harga produk ke total harga keseluruhan
+            $totalHarga += $totalHargaPerProduk;
+        }
     }
+
+    // Menyimpan total harga ke kolom total_harga pada user jika perlu
+    $user->update(['total_harga' => $totalHarga]);
+
+    // Clear session data after successful registration
+    session()->flush();
+
+    // Flash a success message to the session
+    session()->flash('status', 'Pendaftaran berhasil. Silakan login.');
+
+    // Redirect to the login page
+    return redirect()->route('login')->with('status', 'Pendaftaran berhasil. Silakan login.');
+}
+
+
+
 }

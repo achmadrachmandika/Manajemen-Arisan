@@ -23,6 +23,7 @@ class Produk extends Model
         'harga',
         'photo',
         'tanggal',
+         'quantity',
     ];
 
     // Define the types for casting (optional)
@@ -34,10 +35,11 @@ class Produk extends Model
     
     // Model Produk.php
   // Relasi dengan User melalui tabel pivot user_produk
-    public function users()
+   public function users()
     {
         return $this->belongsToMany(User::class, 'user_produk', 'produk_id', 'user_id')
                     ->withPivot([
+                        'quantity', // Menyimpan quantity produk yang dipilih
                         'status_bagian_1', 'status_bagian_2', 'status_bagian_3',
                         'status_bagian_4', 'status_bagian_5', 'status_bagian_6',
                         'status_bagian_7', 'status_bagian_8', 'status_bagian_9',

@@ -20,6 +20,7 @@
                                         <th>Alamat</th>
                                         <th>Email</th>
                                         <th>Produk yang Diikuti</th>
+                                        <th>Quantity</th> <!-- Kolom baru untuk Quantity -->
                                         <th>Deskripsi</th>
                                         <th>Harga</th>
                                         <th>Harga per Bagian</th>
@@ -28,65 +29,95 @@
                                         <th>Cetak</th>
                                     </tr>
                                 </thead>
-                               <tbody>
-                                @foreach($approvedUsers as $user)
-                                @if(!$user->roles->contains('name', 'pegawai'))
-                                <!-- Kondisi untuk menyembunyikan role 'pegawai' -->
-                                <tr>
-                                    <td class="wrap-content">{{ $user->name }}</td>
-                                    <td class="wrap-content">{{ $user->no_wa }}</td>
-                                    <td class="wrap-content">{{ $user->alamat }}</td>
-                                    <td class="wrap-content">{{ $user->email }}</td>
-                                    <td class="wrap-content">
-                                        @foreach($user->produk as $produk)
-                                        <span class="badge bg-info">{{ $produk->nama }}</span><br>
-                                        @endforeach
-                                    </td>
-                                    <td class="text-wrap">
-                                        @if($user->produk->isNotEmpty())
-                                        <p>{{ $user->produk->first()->deskripsi }}</p>
-                                        @endif
-                                    </td>
-                                    <td class="wrap-content">
-                                        @foreach($user->produk as $produk)
-                                        <span class="badge bg-success">Rp. {{ number_format($produk->harga, 0, ',', '.') }}</span><br>
-                                        @endforeach
-                                    </td>
-                                    <td class="wrap-content">
+                                <tbody>
+                                    @foreach($approvedUsers as $user)
+                                    @if(!$user->roles->contains('name', 'pegawai'))
+                                    <!-- Kondisi untuk menyembunyikan role 'pegawai' -->
+                                    <tr>
+                                        <td class="wrap-content">{{ $user->name }}</td>
+                                        <td class="wrap-content">{{ $user->no_wa }}</td>
+                                        <td class="wrap-content">{{ $user->alamat }}</td>
+                                        <td class="wrap-content">{{ $user->email }}</td>
+                                        <td class="wrap-content">
+                                            @foreach($user->produk as $produk)
+                                            <span class="badge bg-info">{{ $produk->nama }}</span><br>
+                                            @endforeach
+                                        </td>
+                                        <td class="wrap-content">
+                                            <!-- Kolom Quantity -->
+                                            @foreach($user->produk as $produk)
+                                            <span class="badge bg-primary">{{ $produk->pivot->quantity }}</span><br>
+                                            <!-- Menampilkan quantity produk -->
+                                            @endforeach
+                                        </td>
+                                        <td class="text-wrap">
+                                            @if($user->produk->isNotEmpty())
+                                            <p>{{ $user->produk->first()->deskripsi }}</p>
+                                            @endif
+                                        </td>
+                                        <td class="wrap-content">
+                                            @foreach($user->produk as $produk)
+                                            <span class="badge bg-success">Rp. {{ number_format($produk->harga, 0, ',', '.') }}</span><br>
+                                            @endforeach
+                                        </td>
+                                       <td class="wrap-content">
                                         @php
-                                        $totalIuran = $user->produk->sum('harga') / 11;
+                                        // Menghitung total harga produk untuk user ini, dibagi dengan jumlah bagian
+                                        $totalIuran = $user->produk->sum(function($produk) {
+                                        // Mengambil harga produk dan quantity yang terkait dengan produk untuk user ini
+                                        return $produk->harga * $produk->pivot->quantity;
+                                        });
+                                    
+                                        // Mendapatkan jumlah bagian dari produk pertama, jika jumlah_bagian adalah 0, set default ke 1
+                                        $totalBagian = $user->produk->first() ? $user->produk->first()->pivot->jumlah_bagian : 1;
+                                    
+                                        // Pastikan jumlah_bagian tidak 0 untuk menghindari division by zero
+                                        $totalBagian = $totalBagian > 0 ? $totalBagian : 1;
+                                    
+                                        // Menghitung total iuran berdasarkan jumlah bagian yang diinputkan admin
+                                        $totalIuran = $totalIuran / $totalBagian;
                                         @endphp
+                                    
                                         @foreach($user->produk as $produk)
+                                        @php
+                                        // Menghitung iuran per bagian untuk setiap produk, pastikan tidak ada pembagian dengan 0
+                                        $iuranPerBagian = ($produk->harga * $produk->pivot->quantity) / $totalBagian;
+                                        // Pastikan iuran per bagian tidak menjadi NaN atau Inf jika jumlah_bagian adalah 0
+                                        $iuranPerBagian = $iuranPerBagian > 0 ? $iuranPerBagian : 0;
+                                        @endphp
                                         <span class="badge bg-warning">
-                                            Rp. {{ number_format($produk->harga / 11, 0, ',', '.') }}
+                                            Rp. {{ number_format($iuranPerBagian, 0, ',', '.') }}
                                         </span><br>
                                         @endforeach
+                                    
                                         <br><strong>Total Iuran:</strong> Rp. {{ number_format($totalIuran, 0, ',', '.') }}
                                     </td>
-                                    <td class="wrap-content">
-                                        @php
-                                        $produk = $user->produk->first(); // Ambil produk pertama dari daftar produk
-                                        $statuses = $produk->pivot; // Menyimpan status pembayaran untuk produk pertama
-                                        @endphp
-                                        <button class="btn btn-info btn-sm"
-                                            onclick="showPaymentDetails('{{ $user->name }}', '{{ $produk->nama }}', {{ json_encode($statuses) }})">
-                                            Detail Pembayaran
-                                        </button>
-                                    </td>
-                                    <td class="wrap-content">
-                                        <button class="btn btn-primary btn-sm" onclick="showPaymentModal({{ $user->id }}, '{{ $user->name }}')">
-                                            Update Status
-                                        </button>
-                                    </td>
-                                    <td class="wrap-content">
-                                        <a href="{{ route('print.transaksi', ['userId' => $user->id]) }}" class="btn btn-warning btn-sm">
-                                            Cetak
-                                        </a>
-                                    </td>
-                                </tr>
-                                @endif
-                                @endforeach
-                            </tbody>
+                                        <td class="wrap-content">
+                                            @php
+                                            $produk = $user->produk->first(); // Ambil produk pertama dari daftar produk
+                                            $statuses = $produk->pivot; // Menyimpan status pembayaran untuk produk pertama
+                                            @endphp
+                                            <button class="btn btn-info btn-sm"
+                                                onclick="showPaymentDetails('{{ $user->name }}', '{{ $produk->nama }}', {{ json_encode($statuses) }})">
+                                                Detail Pembayaran
+                                            </button>
+                                        </td>
+                                        <td class="wrap-content">
+                                            <button class="btn btn-primary btn-sm"
+                                                onclick="showPaymentModal({{ $user->id }}, '{{ $user->name }}')">
+                                                Update Status
+                                            </button>
+                                        </td>
+                                        <td class="wrap-content">
+                                            <a href="{{ route('print.transaksi', ['userId' => $user->id]) }}"
+                                                class="btn btn-warning btn-sm">
+                                                Cetak
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    @endif
+                                    @endforeach
+                                </tbody>
                             </table>
                         </div>
                     </div>

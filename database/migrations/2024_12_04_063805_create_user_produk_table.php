@@ -13,14 +13,10 @@ return new class extends Migration
     {
         Schema::create('user_produk', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');  // Relasi ke tabel 'users'
-            $table->foreignId('produk_id')->constrained('produk', 'produk_id')->onDelete('cascade');  // Relasi ke tabel 'produk'
-            
-            // Menambahkan status pembayaran untuk setiap bagian
-            for ($i = 1; $i <= 11; $i++) {
-                $table->enum("status_bagian_$i", ['terbayar', 'belum_terbayar'])->default('belum_terbayar');
-            }
-            
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Relasi ke tabel 'users'
+            $table->foreignId('produk_id')->constrained('produk', 'produk_id')->onDelete('cascade'); // Relasi ke tabel 'produk'
+            $table->integer('quantity')->default(0); // Menambahkan kolom quantity untuk menyimpan jumlah produk yang dipilih
+            $table->decimal('total_harga', 10, 2); // Total harga untuk produk ini
             $table->timestamps();
         });
     }

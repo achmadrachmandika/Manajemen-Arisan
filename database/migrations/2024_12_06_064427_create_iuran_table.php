@@ -9,12 +9,14 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-     public function up()
+    public function up()
     {
         Schema::create('iuran', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_produk')->constrained('user_produk')->onDelete('cascade');
-            $table->boolean('is_paid')->default(false);
+            $table->foreignId('user_produk_id')->constrained('user_produk')->onDelete('cascade'); // Relasi ke user_produk
+            $table->integer('bagian_ke'); // Menyimpan nomor bagian (misalnya: 1, 2, 3, ...)
+            $table->decimal('jumlah_iuran', 10, 2); // Jumlah iuran yang harus dibayar
+            $table->boolean('is_paid')->default(false); // Status pembayaran untuk bagian tertentu
             $table->timestamps();
         });
     }

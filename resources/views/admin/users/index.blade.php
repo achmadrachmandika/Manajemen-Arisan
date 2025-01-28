@@ -16,14 +16,22 @@
             <ul>
                 @foreach($user->produk as $produk)
                 <li>
-                    {{ $produk->nama }} - Rp{{ number_format($produk->harga, 0, ',', '.') }}
+                    {{ $produk->nama }} -
+                    @if(isset($produk->pivot->quantity))
+                    Rp{{ number_format($produk->harga * $produk->pivot->quantity, 0, ',', '.') }} ({{
+                    $produk->pivot->quantity }} x Rp{{ number_format($produk->harga, 0, ',', '.') }})
+                    @else
+                    Rp{{ number_format($produk->harga, 0, ',', '.') }}
+                    @endif
                 </li>
                 @endforeach
             </ul>
 
             <h6>Total Harga:</h6>
             <p>
-                Rp{{ number_format($user->produk->sum('harga'), 0, ',', '.') }}
+                Rp{{ number_format($user->produk->sum(function($produk) {
+                return $produk->harga * $produk->pivot->quantity;
+                }), 0, ',', '.') }}
             </p>
 
             <form action="{{ route('admin.users.approve', $user->id) }}" method="POST" class="d-inline"
@@ -36,6 +44,25 @@
                         <option value="peserta">Peserta</option>
                     </select>
                 </div>
+
+                <!-- Input untuk Jumlah Bagian Iuran -->
+                <div class="mb-3">
+                    <label for="jumlah_bagian" class="form-label">Jumlah Bagian</label>
+                    <input type="number" id="jumlah_bagian" name="jumlah_bagian" class="form-control" min="1" value="1" required>
+                </div>
+
+                <!-- Dynamic Fields for Iuran per Bagian -->
+                <div class="mb-3">
+                    <label for="iuran" class="form-label">Iuran</label>
+                    <!-- Tambahkan input untuk iuran setiap produk -->
+                    @foreach($user->produk as $produk)
+                    <div>
+                        <label>{{ $produk->nama }}</label>
+                        <input type="hidden" name="iuran[{{ $produk->id }}][1]" value="belum_terbayar"> <!-- Contoh untuk bagian 1 -->
+                    </div>
+                    @endforeach
+                </div>
+
                 <button type="submit" class="btn btn-primary mt-2">Approve</button>
             </form>
 
@@ -55,6 +82,30 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
+    // Handle the dynamic input fields for iuran
+    document.getElementById('jumlah_bagian').addEventListener('input', function() {
+        var jumlahBagian = this.value; // Dapatkan jumlah bagian dari input
+        // Untuk setiap produk, buat input bagian dinamis
+        @foreach($user->produk as $produk)
+            var bagianFields = document.getElementById('bagian_fields_{{ $produk->id }}');
+            bagianFields.innerHTML = ''; // Reset bagian sebelumnya
+            for (var i = 1; i <= jumlahBagian; i++) {
+                // Buat input untuk setiap bagian
+                var div = document.createElement('div');
+                div.classList.add('form-check');
+                div.innerHTML = `
+                    <input type="checkbox" class="form-check-input" name="iuran[{{ $produk->id }}][${i}]" value="terbayar" id="iuran_{{ $produk->id }}_${i}">
+                    <label class="form-check-label" for="iuran_{{ $produk->id }}_${i}">Bagian ${i}</label>
+                `;
+                bagianFields.appendChild(div);
+            }
+        @endforeach
+    });
+
+    // Trigger input untuk bagian pertama kali
+    document.getElementById('jumlah_bagian').dispatchEvent(new Event('input'));
+
+    // Function for confirming deletion
     function confirmDelete(userId) {
         Swal.fire({
             title: 'Apa anda yakin ingin menghapus peserta ini?',
@@ -70,6 +121,7 @@
         });
     }
 
+    // Function to handle user approval
     function approveUser(event, no_wa, productName) {
         event.preventDefault(); // Mencegah form langsung submit
         var form = event.target;
@@ -96,13 +148,4 @@
         });
     }
 </script>
-
-@push('scripts')
-<script>
-    $(document).ready(function() {
-        $('#zero_config').DataTable();
-    });
-</script>
-@endpush
-
 @endsection
